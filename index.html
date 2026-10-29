@@ -200,7 +200,17 @@ dialog.size-dlg::backdrop{background:rgba(23,22,21,.55)}
 .stabs-t[aria-expanded="true"]{background:var(--ink);color:var(--paper)}
 @media (min-width:1100px){.stabs-t{display:none}.stabs ul{display:flex!important}
   .coll,.gender{padding-left:56px}.drop-head{padding-left:56px}.rail{padding-inline-end:56px}}
-@media (max-width:1099px){.stabs ul{margin-top:3px}.stabs ul[hidden]{display:none}}
+@media (max-width:1099px){.stabs ul{margin-top:3px}.stabs ul[hidden]{display:none}
+  .stabs{transition:opacity .4s,transform .4s}
+  .stabs.hero{opacity:0;pointer-events:none;transform:translate(-100%,-50%)}}
+/* phone opening: logo, ring, one line, one Japanese accent */
+@media (max-width:760px){
+  .c-tl,.c-bl,.c-br{display:none}
+  .c-tr{font-size:.78rem;letter-spacing:.5em;opacity:.5;top:auto;bottom:9vh;right:max(5vw,var(--gut-r))}
+  .hero-tag{top:auto;bottom:7vh;flex-direction:column;align-items:center;gap:.35em}
+  .logo-wrap{top:38%}
+  .hero-ring{top:56%;width:44vw}
+}
 
 /* story */
 .story{border-top:1px solid var(--line);padding-block:clamp(80px,11vw,160px);padding-left:max(6vw,var(--gut));padding-right:max(6vw,var(--gut-r));
@@ -904,10 +914,16 @@ function updateTabs(){
   const mid = innerHeight/2; let cur = null;
   if(currentView==='home') tabLinks.forEach(a=>{ const r=document.getElementById(a.dataset.sec).getBoundingClientRect(); if(r.top<=mid && r.bottom>mid) cur=a.dataset.sec; });
   tabLinks.forEach(a=>{ const on=a.dataset.sec===cur; a.classList.toggle('on',on); if(on) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current'); });
+  // keep the opening clean on phones: the tab shows once the hero has scrolled away
+  const pinLen = ctx ? innerHeight*1.1 : 0;   // the hero stays pinned for 110% of a screen while motion is on
+  const onHero = currentView==='home' && scrollY < pinLen + mid;
+  $('#stabs').classList.toggle('hero', onHero);
+  if(onHero && !stabsL.hidden && !wideTabs.matches){ stabsL.hidden=true; stabsT.setAttribute('aria-expanded','false'); }
 }
 let tabTick=false;
 addEventListener('scroll',()=>{ if(tabTick) return; tabTick=true; setTimeout(()=>{ tabTick=false; updateTabs(); },80); },{passive:true});
 addEventListener('hashchange',()=>setTimeout(updateTabs,50));
+setTimeout(updateTabs,0);
 syncWish();
 
 /* ---------- bag ---------- */
@@ -1054,7 +1070,7 @@ function startMotion(){
     const tl=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:'#hero',start:'top top',end:'+=110%',pin:true,scrub:.4,invalidateOnRefresh:true}});
     tl.fromTo('#logoWrap',{opacity:1,scale:1},{opacity:0,scale:.9,duration:.35,immediateRender:false},0)
       .fromTo('.corner,#heroTag,#hud',{opacity:1},{opacity:0,duration:.2,immediateRender:false},0)
-      .fromTo(ring,{y:0,rotation:0,scale:1},{y:()=>-innerHeight*(innerWidth<760?.13:.11),rotation:18,scale:innerWidth<760?.7:.68,duration:.7,ease:'power1.inOut',immediateRender:false},0);
+      .fromTo(ring,{y:0,rotation:0,scale:1},{y:()=>-innerHeight*(innerWidth<760?.06:.11),rotation:18,scale:innerWidth<760?.7:.68,duration:.7,ease:'power1.inOut',immediateRender:false},0);
     orbs.forEach((o,i)=>{
       tl.fromTo(o,{x:0,y:0,scale:.3,opacity:0,rotation:ROT[i]*3},
         {x:()=>spot(i)[0]*innerWidth*.44,
