@@ -126,7 +126,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .rail-btns button{width:3rem;height:3rem;border:1px solid rgba(207,208,207,.35);border-radius:50%;font-size:1.1rem;color:var(--silver)}
 .rail-btns button:hover{background:rgba(207,208,207,.12)}
 .rail{display:flex;gap:clamp(20px,3vw,44px);overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:max(6vw,var(--gut-r));padding-inline:max(6vw,var(--gut-r)) var(--gut);padding-bottom:12px;scrollbar-width:thin;scrollbar-color:#3a3836 transparent;overscroll-behavior-x:contain}
-.drop-item{flex:0 0 clamp(240px,30vw,380px);scroll-snap-align:start;text-decoration:none;color:inherit;display:block}
+.cw{position:relative}
+.cw-drop-item{flex:0 0 clamp(240px,30vw,380px);scroll-snap-align:start}
+.drop-item{text-decoration:none;color:inherit;display:block}
 .drop-item .stage{aspect-ratio:1;display:grid;place-items:center;position:relative;background:radial-gradient(closest-side,rgba(233,230,223,.09),transparent)}
 .drop-item img{width:78%;position:relative;filter:drop-shadow(0 30px 34px rgba(0,0,0,.55));transition:transform .9s cubic-bezier(.2,.7,.1,1)}
 .drop-item:hover img,.drop-item:focus-visible img{transform:rotate(-8deg) scale(1.06)}
@@ -156,7 +158,49 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .card .new{position:absolute;top:14px;right:14px;font-size:.7rem;display:flex;align-items:center;gap:6px;letter-spacing:.1em}
 .card .new img{width:6px}
 .card .sub{font-size:.8rem;color:var(--ink-2);margin-top:4px}
-.card[hidden]{display:none}
+.cw[hidden]{display:none}
+
+/* wishlist hearts */
+.wish{position:absolute;top:10px;left:10px;z-index:2;width:2.5rem;height:2.5rem;border-radius:50%;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;transition:transform .3s}
+.wish:hover{transform:scale(1.08)}
+.wish svg,.heart{width:1.1rem;height:1.1rem;fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linejoin:round}
+.wish[aria-pressed="true"] svg{fill:var(--ink)}
+.wish.pop svg{animation:pop .45s cubic-bezier(.2,.7,.1,1.4)}
+@keyframes pop{40%{transform:scale(1.35)}}
+.hdr .wishb{display:flex;align-items:center;gap:6px;font-size:.85rem}
+.hdr .wishb svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.5}
+.pdp-actions{display:grid;grid-template-columns:1fr auto;gap:10px}
+.pdp-actions .wish-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--ink);border-radius:99px;padding:0 18px;font-size:.9rem}
+.pdp-actions .wish-btn svg{width:1.05rem;height:1.05rem;fill:none;stroke:var(--ink);stroke-width:1.5}
+.pdp-actions .wish-btn[aria-pressed="true"] svg{fill:var(--ink)}
+.link-btn{text-decoration:underline;text-underline-offset:3px;font-size:.8rem}
+.wish-list li{grid-template-columns:64px 1fr auto}
+.wish-list .acts{display:flex;gap:12px;font-size:.78rem;margin-top:4px}
+.wish-list .acts a,.wish-list .acts button{text-decoration:underline;color:var(--ink-2)}
+
+/* size guide dialog */
+dialog.size-dlg{border:0;padding:0;background:var(--paper);color:var(--ink);width:min(1040px,calc(100vw - 24px));max-height:calc(100svh - 24px);overflow:auto}
+dialog.size-dlg::backdrop{background:rgba(23,22,21,.55)}
+.size-dlg .head{position:sticky;top:0;z-index:2;background:var(--paper);display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line)}
+.size-dlg .head h2{margin:0;font-weight:400;font-size:1.3rem}
+.size-dlg .head .x{font-size:1.6rem;line-height:1;padding:4px 10px}
+.size-dlg .sizing{padding:24px 20px 32px;max-width:none}
+
+/* side tabs */
+.stabs{position:fixed;left:env(safe-area-inset-left,0px);top:50%;transform:translateY(-50%);z-index:45;display:flex;flex-direction:column;align-items:flex-start}
+.stabs ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
+.stabs a,.stabs-t{display:flex;align-items:center;gap:8px;writing-mode:vertical-rl;background:var(--paper);color:var(--ink);border:1px solid var(--ink);border-left:0;padding:12px 6px;font-size:.7rem;text-decoration:none;letter-spacing:.04em;transition:background .25s,color .25s,padding .25s}
+.stabs a b{font-family:var(--f-ui);font-weight:400;font-size:.62rem;letter-spacing:.1em;opacity:.6}
+.stabs a:hover,.stabs a:focus-visible{padding-left:10px}
+.stabs a.on{background:var(--ink);color:var(--paper)}
+.stabs a.on b{opacity:.8}
+.stabs-t{gap:10px;font-weight:500}
+.stabs-t .ic{display:grid;gap:3px}
+.stabs-t .ic i{display:block;width:3px;height:12px;background:currentColor}
+.stabs-t[aria-expanded="true"]{background:var(--ink);color:var(--paper)}
+@media (min-width:1100px){.stabs-t{display:none}.stabs ul{display:flex!important}
+  .coll,.gender{padding-left:56px}.drop-head{padding-left:56px}.rail{padding-inline-end:56px}}
+@media (max-width:1099px){.stabs ul{margin-top:3px}.stabs ul[hidden]{display:none}}
 
 /* story */
 .story{border-top:1px solid var(--line);padding-block:clamp(80px,11vw,160px);padding-left:max(6vw,var(--gut));padding-right:max(6vw,var(--gut-r));
@@ -445,8 +489,20 @@ details .body ul{margin:0;padding-inline-start:1.1em}
     <a href="#home" aria-label="Duni, חזרה לעמוד הבית"><img class="mark" src="assets/logo.png" alt="Duni"></a>
   </div>
   <nav aria-label="ניווט ראשי"><a href="#drop">הדרופ החדש</a><a href="#collection">הקולקציה</a><a href="#for">לנשים ולגברים</a><a href="#vision">החזון</a><a href="#sizing">מידות</a></nav>
-  <div class="hdr-end"><span class="clock" lang="en" aria-hidden="true">local time<br>tlv <span id="clock">--:--</span></span><button class="bag" id="bagBtn" type="button" aria-haspopup="dialog">סל (<span id="bagN">0</span>)</button></div>
+  <div class="hdr-end"><span class="clock" lang="en" aria-hidden="true">local time<br>tlv <span id="clock">--:--</span></span><button class="bag wishb" id="wishBtn" type="button" aria-haspopup="dialog" aria-label="רשימת המשאלות"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.4 4.5 6.9 4.5c2.1 0 3.7 1.2 5.1 3 1.4-1.8 3-3 5.1-3 3.5 0 5.5 3.5 4.2 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>(<span id="wishN">0</span>)</button><button class="bag" id="bagBtn" type="button" aria-haspopup="dialog">סל (<span id="bagN">0</span>)</button></div>
 </header>
+
+<nav class="stabs" id="stabs" aria-label="מעבר מהיר בין חלקי האתר">
+  <button class="stabs-t" id="stabsT" type="button" aria-expanded="false" aria-controls="stabsL"><span class="ic" aria-hidden="true"><i></i><i></i><i></i></span>פרקים</button>
+  <ul id="stabsL" hidden>
+    <li><a href="#drop" data-sec="drop"><b>01</b>דרופ</a></li>
+    <li><a href="#collection" data-sec="collection"><b>02</b>קולקציה</a></li>
+    <li><a href="#for" data-sec="for"><b>03</b>היא · הוא</a></li>
+    <li><a href="#vision" data-sec="vision"><b>04</b>חזון</a></li>
+    <li><a href="#sizing" data-sec="sizing"><b>05</b>מידות</a></li>
+    <li><a href="#custom" data-sec="custom"><b>06</b>אישי</a></li>
+  </ul>
+</nav>
 
 <nav class="menu" id="menu" hidden aria-label="תפריט האתר">
   <div class="menu-in">
@@ -646,6 +702,19 @@ details .body ul{margin:0;padding-inline-start:1.1em}
   </div>
 </footer>
 
+<div class="drawer" id="wishDrawer" hidden role="dialog" aria-modal="true" aria-labelledby="wishH">
+  <div class="scrim" id="wishScrim"></div>
+  <div class="panel">
+    <h2 id="wishH">רשימת המשאלות <button class="x" type="button" id="wishX" aria-label="סגירת רשימת המשאלות">×</button></h2>
+    <ul class="bag-list wish-list" id="wishList"></ul>
+  </div>
+</div>
+
+<dialog class="size-dlg" id="sizeDlg" aria-labelledby="sizeDlgH">
+  <div class="head"><h2 id="sizeDlgH">איך מודדים אצבע</h2><button class="x" type="button" id="sizeDlgX" aria-label="סגירת מדריך המידות">×</button></div>
+  <div id="sizeDlgBody"></div>
+</dialog>
+
 <div class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="bagH">
   <div class="scrim" id="drawerScrim"></div>
   <div class="panel">
@@ -730,17 +799,19 @@ $('#tPlus').onclick = ()=>{ A.t=Math.min(3,A.t+1); applyA11y(); refreshMotion();
 $('#tMinus').onclick = ()=>{ A.t=Math.max(0,A.t-1); applyA11y(); refreshMotion(); };
 document.querySelectorAll('.a11y-panel .tg').forEach(b=>b.onclick=()=>{ A[b.dataset.k]=!A[b.dataset.k]; applyA11y(); if(b.dataset.k==='still'){ stopMotion(); if(currentView==='home') startMotion(); } });
 $('#a11yReset').onclick = ()=>{ Object.assign(A,{t:0,hc:false,ul:false,rf:false,still:matchMedia('(prefers-reduced-motion: reduce)').matches}); applyA11y(); stopMotion(); if(currentView==='home') startMotion(); };
-document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ if(!$('#a11yPanel').hidden){ $('#a11yPanel').hidden=true; $('#a11yBtn').setAttribute('aria-expanded','false'); $('#a11yBtn').focus(); } if(!$('#drawer').hidden) closeBag(); if(!$('#menu').hidden) closeMenu(); }});
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ if(!$('#a11yPanel').hidden){ $('#a11yPanel').hidden=true; $('#a11yBtn').setAttribute('aria-expanded','false'); $('#a11yBtn').focus(); } if(!$('#drawer').hidden) closeBag(); if(!$('#wishDrawer').hidden) closeWish(); if(!$('#menu').hidden) closeMenu(); }});
 
 /* ---------- home content ---------- */
 const words = ['small things carry big energy','תכשיטים בעבודת יד','real materials','חומרים אמיתיים','slow process','手作りのジュエリー','timeless pieces','情熱'];
 const chunk = words.map(w=>`<span>${w}<img src="assets/star.png" alt=""></span>`).join('');
 $('#marq').innerHTML = chunk + chunk;
 
-const cardHTML = (p, cls='card') => `<a class="${cls}" href="#p-${p.name}" data-cat="${p.cat}" data-g="${p.g}">
+const HEART = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.4 4.5 6.9 4.5c2.1 0 3.7 1.2 5.1 3 1.4-1.8 3-3 5.1-3 3.5 0 5.5 3.5 4.2 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>';
+const wishBtnHTML = p => `<button class="wish" type="button" data-wish="${p.id}" aria-pressed="false" aria-label="שמירת ${CAT[p.cat][0]} ${p.he} ברשימת המשאלות">${HEART}</button>`;
+const cardHTML = (p, cls='card') => `<div class="cw cw-${cls}" data-cat="${p.cat}" data-g="${p.g}">${wishBtnHTML(p)}<a class="${cls}" href="#p-${p.name}">
   <div class="stage">${p.drop && cls==='card' ?'<span class="new"><img src="assets/star.png" alt="">חדש</span>':''}<img src="${src(p.id)}" alt="${CAT[p.cat][0]} ${p.he}" loading="lazy"></div>
   <div class="meta"><span><span class="nm" lang="en">${p.name}</span><span class="jp" lang="ja">${p.jp}</span><span class="heb">${CAT[p.cat][0]} ${p.he} · ${p.mean}</span></span><span class="pr">${ils(p.price)}</span></div>
-  </a>`;
+  </a></div>`;
 $('#rail').innerHTML = P.filter(p=>p.drop).map(p=>cardHTML(p,'drop-item')).join('');
 $('#grid').innerHTML = P.map(p=>cardHTML(p)).join('');
 const railStep = ()=> ($('#rail').firstElementChild?.offsetWidth||300) + 30;
@@ -752,7 +823,7 @@ const filters = $('#filters');
   const b=document.createElement('button'); b.type='button'; b.id='f-'+c; b.setAttribute('aria-pressed',i===0);
   b.innerHTML=`${label}<sup>${n}</sup>`;
   b.onclick=()=>{ filters.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));
-    $('#grid').querySelectorAll('.card').forEach(card=>card.hidden=!(c==='all'||card.dataset.cat===c||card.dataset.g===c));
+    $('#grid').querySelectorAll('.cw').forEach(card=>card.hidden=!(c==='all'||card.dataset.cat===c||card.dataset.g===c));
     if(window.ScrollTrigger) ScrollTrigger.refresh(); };
   filters.appendChild(b);
 });
@@ -782,6 +853,62 @@ function closeMenu(restoreFocus=true){
 }
 burger.onclick = ()=> burger.getAttribute('aria-expanded')==='true' ? closeMenu() : openMenu();
 menu.addEventListener('click', e=>{ const a=e.target.closest('a'); if(!a) return; const same = a.getAttribute('href')===location.hash; closeMenu(false); if(same) route(); });
+
+/* ---------- wishlist (kept in this browser only) ---------- */
+let wish = [];
+try{ wish = JSON.parse(localStorage.getItem('duni-wish')||'[]').filter(id=>P.some(p=>p.id===id)); }catch(e){}
+function saveWish(){ try{ localStorage.setItem('duni-wish', JSON.stringify(wish)); }catch(e){} }
+function syncWish(){
+  $('#wishN').textContent = wish.length;
+  document.querySelectorAll('[data-wish]').forEach(b=>{ const on=wish.includes(b.dataset.wish); b.setAttribute('aria-pressed',on); const l=b.querySelector('.wl'); if(l) l.textContent = on?'שמור':'לשמור'; });
+  $('#wishList').innerHTML = wish.length ? wish.map(id=>{const p=P.find(x=>x.id===id);return `<li><img src="${src(p.id)}" alt=""><div><div>${CAT[p.cat][0]} ${p.he} <span lang="en" style="font-family:var(--f-ui)">(${p.name})</span></div><div class="acts"><a href="#p-${p.name}" data-close-wish>לעמוד התכשיט</a><button type="button" data-unwish="${p.id}">הסרה</button></div></div><span style="font-family:var(--f-ui)">${ils(p.price)}</span></li>`}).join('') : '<li style="display:block;border:0;color:var(--ink-2)">עוד לא שמרת תכשיטים. לוחצים על הלב ליד תכשיט כדי לשמור אותו כאן.</li>';
+}
+function toggleWish(id, btn){
+  const p=P.find(x=>x.id===id); const i=wish.indexOf(id);
+  if(i>=0){ wish.splice(i,1); say(`${CAT[p.cat][0]} ${p.he} הוסרה מרשימת המשאלות`); }
+  else { wish.push(id); say(`${CAT[p.cat][0]} ${p.he} נשמרה ברשימת המשאלות`); if(btn&&!A.still){ btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop'); } }
+  saveWish(); syncWish();
+}
+document.addEventListener('click', e=>{
+  const w=e.target.closest('[data-wish]'); if(w){ e.preventDefault(); toggleWish(w.dataset.wish, w); return; }
+  const u=e.target.closest('[data-unwish]'); if(u){ toggleWish(u.dataset.unwish); return; }
+  if(e.target.closest('[data-close-wish]')) closeWish(false);
+  if(e.target.closest('[data-sizeguide]')) openSizeGuide();
+});
+let wishFocus=null;
+function openWish(){ wishFocus=document.activeElement; syncWish(); $('#wishDrawer').hidden=false; $('#wishX').focus(); }
+function closeWish(restore=true){ $('#wishDrawer').hidden=true; if(restore&&wishFocus) wishFocus.focus(); }
+$('#wishBtn').onclick=openWish; $('#wishX').onclick=()=>closeWish(); $('#wishScrim').onclick=()=>closeWish();
+
+/* ---------- size guide over the product page ---------- */
+const sizeDlg = $('#sizeDlg');
+function openSizeGuide(){
+  const c=$('#sizing').cloneNode(true);
+  c.removeAttribute('id'); c.removeAttribute('aria-labelledby');
+  c.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+  c.querySelector('h2')?.remove();
+  $('#sizeDlgBody').replaceChildren(c);
+  sizeDlg.showModal(); $('#sizeDlgX').focus();
+}
+$('#sizeDlgX').onclick=()=>sizeDlg.close();
+sizeDlg.addEventListener('click',e=>{ if(e.target===sizeDlg) sizeDlg.close(); });
+
+/* ---------- side tabs ---------- */
+const stabsT=$('#stabsT'), stabsL=$('#stabsL');
+const wideTabs = matchMedia('(min-width:1100px)');
+stabsT.onclick=()=>{ const open=stabsL.hidden; stabsL.hidden=!open; stabsT.setAttribute('aria-expanded',open); };
+stabsL.addEventListener('click',e=>{ const a=e.target.closest('a'); if(!a) return; if(!wideTabs.matches){ stabsL.hidden=true; stabsT.setAttribute('aria-expanded','false'); } if(a.getAttribute('href')===location.hash){ e.preventDefault(); route(); } });
+const tabLinks=[...stabsL.querySelectorAll('a')];
+// the tab whose section holds the middle of the screen is the active one
+function updateTabs(){
+  const mid = innerHeight/2; let cur = null;
+  if(currentView==='home') tabLinks.forEach(a=>{ const r=document.getElementById(a.dataset.sec).getBoundingClientRect(); if(r.top<=mid && r.bottom>mid) cur=a.dataset.sec; });
+  tabLinks.forEach(a=>{ const on=a.dataset.sec===cur; a.classList.toggle('on',on); if(on) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current'); });
+}
+let tabTick=false;
+addEventListener('scroll',()=>{ if(tabTick) return; tabTick=true; setTimeout(()=>{ tabTick=false; updateTabs(); },80); },{passive:true});
+addEventListener('hashchange',()=>setTimeout(updateTabs,50));
+syncWish();
 
 /* ---------- bag ---------- */
 let bag = [];
@@ -817,13 +944,13 @@ function productHTML(p){
         <p class="jp-note">${p.jp} (<span lang="en">${p.name}</span>, נקרא ${p.he}) ביפנית: ${p.mean}.</p>
         <div class="pr">${ils(p.price)}</div>
         <p class="lead">${p.lead}</p>
-        <div><div class="sizes-l"><span id="sizeL">מידה</span>${isRing&&p.id!=='openring'?'<a href="#sizing">איך מודדים אצבע?</a>':''}</div>
+        <div><div class="sizes-l"><span id="sizeL">מידה</span>${isRing&&p.id!=='openring'?'<button type="button" class="link-btn" data-sizeguide aria-haspopup="dialog">איך מודדים אצבע?</button>':''}</div>
           <div class="sizes" id="sizes" role="group" aria-labelledby="sizeL" style="margin-top:8px">${sizes.map(s=>`<button type="button" aria-pressed="${sizes.length===1}">${s}</button>`).join('')}</div></div>
-        <button class="btn" type="button" id="addBag">הוספה לסל <img src="assets/star.png" alt=""></button>
+        <div class="pdp-actions"><button class="btn" type="button" id="addBag">הוספה לסל <img src="assets/star.png" alt=""></button><button class="wish-btn" type="button" data-wish="${p.id}" aria-pressed="false" aria-label="שמירה ברשימת המשאלות">${HEART}<span class="wl">לשמור</span></button></div>
         <div class="assure"><div><b>עבודת יד</b>כל תכשיט מיוצר בנפרד</div><div><b>כסף 925</b>כסף סטרלינג</div><div><b>אריזת מתנה</b>עם סימן ה-✦</div></div>
         <div>
           <details open><summary>פרטים וחומרים</summary><div class="body"><ul><li>כסף סטרלינג 925</li><li>מכופף, מרוקע בפטיש ומלוטש ביד</li><li>כל תכשיט שונה מעט מהתמונה, וזה חלק מהעבודה בעבודת יד</li>${p.id==='signet'||p.id==='pendant'?'<li>האבן משתנה מעט בצורה ובגוון בין תכשיט לתכשיט</li>':''}</ul></div></details>
-          ${isRing&&p.id!=='openring'?`<details><summary>מדריך מידות</summary><div class="body">מודדים את ההיקף של האצבע במילימטרים, והמספר הוא המידה. אם יש ספק, עדיף לבחור מידה אחת למעלה.<div class="tblwrap"><table class="size-table"><thead><tr><th scope="col">מידה</th><th scope="col">היקף (מ״מ)</th><th scope="col">קוטר (מ״מ)</th><th scope="col">US בערך</th></tr></thead><tbody>${RING_SIZES.map(([s,d,u])=>`<tr><td>${s}</td><td>${s}</td><td>${d}</td><td>${u}</td></tr>`).join('')}</tbody></table></div></div></details>`:''}
+          ${isRing&&p.id!=='openring'?`<details><summary>מדריך מידות</summary><div class="body">מודדים את ההיקף של האצבע במילימטרים, והמספר הוא המידה. אם יש ספק, עדיף לבחור מידה אחת למעלה. <button type="button" class="link-btn" data-sizeguide aria-haspopup="dialog">למדריך המדידה המלא</button><div class="tblwrap"><table class="size-table"><thead><tr><th scope="col">מידה</th><th scope="col">היקף (מ״מ)</th><th scope="col">קוטר (מ״מ)</th><th scope="col">US בערך</th></tr></thead><tbody>${RING_SIZES.map(([s,d,u])=>`<tr><td>${s}</td><td>${s}</td><td>${d}</td><td>${u}</td></tr>`).join('')}</tbody></table></div></div></details>`:''}
           <details><summary>שמירה וניקוי</summary><div class="body">כסף משנה גוון עם הזמן במגע עם אוויר ולחות. מורידים לפני מקלחת, ים, בריכה ושימוש בחומרי ניקוי, שומרים במקום יבש ומבריקים מדי פעם עם מטלית לניקוי כסף. <a href="#care">למדריך המלא</a></div></details>
           <details><summary>משלוח והחזרות</summary><div class="body">כל תכשיט מוכן בהזמנה. זמן הכנה ומשלוח: <span class="ph">ימי עסקים</span>. אפשר לבטל עסקה לפי חוק הגנת הצרכן. <a href="#shipping">משלוחים והחזרות</a> · <a href="#cancel">מדיניות ביטולים</a></div></details>
         </div>
@@ -849,6 +976,7 @@ function mountProduct(p){
   st.addEventListener('pointermove',e=>{ if(A.still) return; const r=st.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5; im.style.transform=`rotateY(${x*18}deg) rotateX(${-y*14}deg) rotate(${x*6}deg) scale(1.04)`; });
   st.addEventListener('pointerleave',()=>im.style.transform='');
   document.title = `${p.name} · Duni`;
+  syncWish();
 }
 
 /* ---------- policy pages ---------- */
