@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Duni Jewelry</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Heebo:wght@300;400;500&family=Shippori+Mincho:wght@400;500&display=swap">
+<style>
+/* Layout: one paper sheet that unfolds (RTL, Hebrew first). Pinned hero where the ring opens into the collection,
+   an ink band for the latest drop with a native swipe rail, collection grid, Eden's story, custom rings.
+   Product pages and policy pages are views of the same page (#p-<name>, #shipping …).
+   Deliberately single-theme: the brand is ink on paper. Sizes in rem so the accessibility text-size control scales everything. */
+:root{
+  --paper:#e9e6df;
+  --paper-2:#dfdbd2;
+  --ink:#171615;
+  --ink-2:#57534d;
+  --silver:#cfd0cf;
+  --muted-d:#9a978f;
+  --line:rgba(23,22,21,.16);
+  --f-ui:"Jost","Heebo","Avenir Next",system-ui,sans-serif;
+  --f-he:"Heebo","Jost",system-ui,sans-serif;
+  --f-jp:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  --gut:max(16px, env(safe-area-inset-left, 0px));
+  --gut-r:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:light;
+}
+:root.hc{--paper:#ffffff;--paper-2:#f1f1f1;--ink:#000000;--ink-2:#1d1d1d;--silver:#ffffff;--muted-d:#e0e0e0;--line:rgba(0,0,0,.55)}
+:root.rf{--f-ui:Arial,"Heebo",sans-serif;--f-he:Arial,"Heebo",sans-serif}
+:root.rf .sp,:root.rf .he-l{letter-spacing:.04em!important}
+:root.ul a{text-decoration:underline!important;text-underline-offset:3px}
+:root.still *,:root.still *::before,:root.still *::after{animation:none!important;transition:none!important}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-he);font-weight:300;font-size:1rem;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.3;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5  0 0 0 0 .48  0 0 0 0 .45  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+:root.hc body::after{display:none}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:61;background:var(--paper)}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.sp{font-family:var(--f-ui);letter-spacing:.3em;text-transform:lowercase}
+.he-l{letter-spacing:.08em}
+.jp{font-family:var(--f-jp);font-weight:400}
+[lang="en"]{font-family:var(--f-ui)}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:fixed;top:-100px;right:16px;z-index:90;background:var(--ink);color:var(--paper);padding:10px 18px;text-decoration:none}
+.skip:focus{top:calc(12px + env(safe-area-inset-top,0px))}
+
+/* header */
+.hdr{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding-block:16px;padding-left:var(--gut);padding-right:var(--gut-r);mix-blend-mode:difference;color:#e9e6df}
+:root.hc .hdr{mix-blend-mode:normal;background:var(--paper);color:var(--ink)}
+:root.hc .hdr .mark{filter:none}
+.hdr .mark{width:4.4rem;filter:invert(1)}
+.hdr nav{display:flex;gap:1.8rem;font-size:.85rem}
+.hdr nav a{text-decoration:none}
+.hdr .bag{font-size:.85rem}
+@media (max-width:760px){.hdr nav{display:none}}
+
+/* views */
+.view[hidden]{display:none!important}
+
+/* hero */
+.hero{position:relative;height:100svh;min-height:560px;overflow:hidden}
+.corner{position:absolute;font-size:.75rem;line-height:2.1}
+.c-tl{top:15vh;left:max(6vw,var(--gut));direction:ltr;text-align:left}
+.c-bl{bottom:7vh;left:max(6vw,var(--gut));direction:ltr;text-align:left}
+.c-bl .jp{font-size:1.5rem;letter-spacing:.1em;line-height:1.4}
+.c-bl .he{display:block;direction:rtl;text-align:left;font-size:.85rem;line-height:1.9}
+.c-tl .he{display:block;font-size:.8rem;color:var(--ink-2);direction:rtl;text-align:left;margin-top:.4rem;letter-spacing:.02em}
+.dash{display:block;width:22px;height:1px;background:var(--ink);margin:12px 0}
+.c-tr{top:13vh;right:max(5vw,var(--gut-r));writing-mode:vertical-rl;font-size:1.2rem;letter-spacing:.42em}
+.c-br{bottom:7vh;right:max(6vw,var(--gut-r));width:2.1rem}
+.logo-wrap{position:absolute;left:50%;top:45%;width:min(76vw,920px);transform:translate(-50%,-50%)}
+.hero-tag{position:absolute;left:50%;top:calc(45% - min(76vw,920px) * .1435 - 2.6rem);transform:translateX(-50%);white-space:nowrap;font-size:clamp(.8rem,1.3vw,1rem);display:flex;gap:1.2em;align-items:baseline;z-index:4}
+.hero-tag .he{letter-spacing:.12em;font-weight:400}
+@media (max-width:760px){.hero-tag{top:calc(42% - 12.4vw - 2.8rem);font-size:.7rem;gap:.8em}.hero-tag .sp{letter-spacing:.16em}.c-bl{bottom:13vh}}
+.piece{position:absolute;left:50%;top:50%;will-change:transform;pointer-events:none}
+:root:not(.gs) .piece{transform:translate(-50%,-50%)}
+.piece img{width:100%;filter:drop-shadow(0 26px 30px rgba(40,34,26,.22)) drop-shadow(0 4px 6px rgba(40,34,26,.12))}
+.hero-ring{width:min(30vw,350px);top:61%;z-index:3}
+.orbit{width:min(12.5vw,160px);opacity:0;z-index:2}
+.burst-copy{position:absolute;left:0;right:0;bottom:5vh;text-align:center;opacity:0;z-index:4;pointer-events:none}
+.burst-copy h2{font-weight:400;font-size:clamp(1.6rem,3.4vw,2.6rem);letter-spacing:.14em;margin:0;line-height:1.2}
+.burst-copy p{margin:.3em 0 0;font-size:.75rem;color:var(--ink-2)}
+.scroll-cue{position:absolute;left:50%;bottom:3vh;transform:translateX(-50%);font-size:.65rem;letter-spacing:.4em;color:var(--ink-2);text-align:center}
+.scroll-cue::after{content:"";display:block;width:1px;height:30px;margin:8px auto 0;background:var(--ink);transform-origin:top;animation:cue 2.4s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(0);transform-origin:bottom}}
+@media (max-width:760px){
+  .hero-ring{width:46vw;top:63%}.orbit{width:21vw}
+  .c-tl{top:11vh}.c-tr{font-size:.95rem;top:11vh}
+  .logo-wrap{top:42%;width:86vw}
+  .scroll-cue{display:none}
+}
+
+/* marquee */
+.marq{border-block:1px solid var(--line);overflow:hidden;padding-block:14px;white-space:nowrap;direction:ltr}
+.marq-track{display:inline-flex;gap:3rem;animation:marq 40s linear infinite;font-size:.8rem}
+.marq-track span{display:inline-flex;align-items:center;gap:3rem}
+.marq-track img{width:9px;display:inline-block}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* manifesto */
+.manifesto{padding-block:clamp(80px,13vw,170px);padding-left:var(--gut);padding-right:var(--gut-r);display:grid;grid-template-columns:1fr minmax(0,640px) 1fr}
+.manifesto>div{grid-column:2;min-width:0}
+.manifesto .jp{font-size:clamp(3.4rem,9vw,6.8rem);line-height:1;margin:0 0 1.6rem;letter-spacing:.06em}
+.manifesto p{font-size:clamp(1.2rem,2.3vw,1.6rem);line-height:1.65;margin:0 0 .9em;text-wrap:pretty}
+.manifesto .en{font-size:.85rem;color:var(--ink-2);margin-top:1.6rem;direction:ltr;text-align:right}
+
+/* drop */
+.drop{background:var(--ink);color:var(--silver);padding-block:clamp(70px,9vw,120px)}
+.drop-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:24px;padding-left:var(--gut);padding-right:max(6vw,var(--gut-r));margin-bottom:clamp(30px,4vw,56px)}
+.drop-head .eyebrow{font-size:.8rem;color:var(--muted-d)}
+.drop-head h2{font-weight:300;margin:.15em 0 .1em;font-size:clamp(3.6rem,9vw,8rem);line-height:1;font-family:var(--f-ui);direction:ltr;text-align:right}
+.drop-head h2 .jp{font-size:.55em;margin-left:.2em;color:var(--muted-d)}
+.drop-head p{max-width:40ch;color:#b4b2ac;margin:0}
+:root.hc .drop-head p{color:#fff}
+.rail-btns{display:flex;gap:10px}
+.rail-btns button{width:3rem;height:3rem;border:1px solid rgba(207,208,207,.35);border-radius:50%;font-size:1.1rem;color:var(--silver)}
+.rail-btns button:hover{background:rgba(207,208,207,.12)}
+.rail{display:flex;gap:clamp(20px,3vw,44px);overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:max(6vw,var(--gut-r));padding-inline:max(6vw,var(--gut-r)) var(--gut);padding-bottom:12px;scrollbar-width:thin;scrollbar-color:#3a3836 transparent;overscroll-behavior-x:contain}
+.drop-item{flex:0 0 clamp(240px,30vw,380px);scroll-snap-align:start;text-decoration:none;color:inherit;display:block}
+.drop-item .stage{aspect-ratio:1;display:grid;place-items:center;position:relative;background:radial-gradient(closest-side,rgba(233,230,223,.09),transparent)}
+.drop-item img{width:78%;position:relative;filter:drop-shadow(0 30px 34px rgba(0,0,0,.55));transition:transform .9s cubic-bezier(.2,.7,.1,1)}
+.drop-item:hover img,.drop-item:focus-visible img{transform:rotate(-8deg) scale(1.06)}
+.meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:16px;border-top:1px solid currentColor;padding-top:12px;font-size:.85rem}
+.drop .meta{border-color:rgba(207,208,207,.25)}
+.meta .nm{font-family:var(--f-ui);letter-spacing:.24em}
+.meta .jp{font-size:.95rem;margin-inline-start:8px;opacity:.6}
+.meta .pr{font-variant-numeric:tabular-nums;font-family:var(--f-ui)}
+.meta .heb{display:block;font-size:.8rem;opacity:.7;letter-spacing:.04em}
+
+/* section heads */
+.sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:24px;margin-bottom:48px}
+.sec-head h2{font-weight:400;font-size:clamp(2.2rem,5vw,4rem);letter-spacing:.06em;margin:0;line-height:1}
+.sec-head h2 small{display:block;font-size:.75rem;letter-spacing:.3em;color:var(--ink-2);margin-bottom:16px;font-family:var(--f-ui);font-weight:300}
+
+/* collection */
+.coll{padding-block:clamp(80px,10vw,140px) 60px;padding-left:var(--gut);padding-right:var(--gut-r);max-width:1440px;margin:0 auto}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.filters button{font-size:.85rem;letter-spacing:.06em;padding:8px 16px;border:1px solid var(--line);border-radius:99px;transition:background .3s,color .3s}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.filters sup{font-size:.6rem;margin-inline-start:4px;opacity:.6;font-family:var(--f-ui)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(250px,100%),1fr));gap:52px 30px}
+.card{display:block;text-decoration:none;color:inherit}
+.card .stage{aspect-ratio:4/5;background:var(--paper-2);display:grid;place-items:center;overflow:hidden;position:relative}
+.card .stage>img{width:70%;filter:drop-shadow(0 22px 22px rgba(40,34,26,.2));transition:transform 1s cubic-bezier(.2,.7,.1,1)}
+.card:hover .stage>img,.card:focus-visible .stage>img{transform:scale(1.08) rotate(5deg)}
+.card .new{position:absolute;top:14px;right:14px;font-size:.7rem;display:flex;align-items:center;gap:6px;letter-spacing:.1em}
+.card .new img{width:6px}
+.card .sub{font-size:.8rem;color:var(--ink-2);margin-top:4px}
+.card[hidden]{display:none}
+
+/* story */
+.story{border-top:1px solid var(--line);padding-block:clamp(80px,11vw,160px);padding-left:max(6vw,var(--gut));padding-right:max(6vw,var(--gut-r));
+  display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,6vw,100px);align-items:start;max-width:1440px;margin:0 auto}
+.story .big-name{font-size:clamp(5rem,15vw,12rem);line-height:.85;font-weight:300;margin:0;letter-spacing:-.01em}
+.story .big-name small{display:block;font-size:.75rem;letter-spacing:.3em;color:var(--ink-2);font-family:var(--f-ui);margin-bottom:24px;font-weight:300}
+.story .facts{display:flex;gap:36px;margin-top:36px;flex-wrap:wrap}
+.story .facts div{border-top:1px solid var(--ink);padding-top:10px;min-width:110px}
+.story .facts b{display:block;font-size:2.4rem;font-weight:300;line-height:1;font-family:var(--f-ui)}
+.story .facts span{font-size:.8rem;color:var(--ink-2)}
+.story .txt{min-width:0}
+.story .txt p{font-size:clamp(1.1rem,1.9vw,1.4rem);line-height:1.75;margin:0 0 1em;text-wrap:pretty}
+.story .txt .en{direction:ltr;text-align:right;font-size:.9rem;color:var(--ink-2);line-height:1.7;max-width:56ch;margin-inline-start:auto}
+.story .sign{display:flex;align-items:center;gap:12px;margin-top:28px;font-size:.85rem}
+.story .sign img{width:8px}
+@media (max-width:820px){.story{grid-template-columns:1fr}}
+
+/* custom */
+.custom{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,96px);align-items:center;
+  padding-block:clamp(80px,11vw,160px);padding-left:max(6vw,var(--gut));padding-right:max(6vw,var(--gut-r));border-top:1px solid var(--line)}
+.custom .ring-stage{position:relative;aspect-ratio:1;display:grid;place-items:center;width:min(100%,520px);justify-self:center}
+.custom .ring-stage::before{content:"";position:absolute;inset:6%;border:1px solid var(--line);border-radius:50%}
+.custom .ring-stage::after{content:"";position:absolute;inset:18%;border:1px dashed var(--line);border-radius:50%;animation:spin 60s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.custom .ring-stage img{width:62%;position:relative;z-index:1;filter:drop-shadow(0 30px 32px rgba(40,34,26,.24))}
+.custom h2{font-weight:400;font-size:clamp(1.9rem,4vw,3.2rem);line-height:1.2;margin:0 0 .5em;text-wrap:balance}
+.custom h2 .jp{display:block;font-size:.45em;letter-spacing:.3em;color:var(--ink-2);margin-bottom:.8em}
+.custom .en-sub{font-family:var(--f-ui);font-size:.8rem;letter-spacing:.28em;color:var(--ink-2);direction:ltr;text-align:right;margin-bottom:6px}
+.custom>div:last-child{min-width:0}
+.steps{list-style:none;margin:32px 0 36px;padding:0}
+.steps li{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:16px 0;border-top:1px solid var(--line)}
+.steps li:last-child{border-bottom:1px solid var(--line)}
+.steps b{font-weight:400;font-size:.8rem;letter-spacing:.2em;padding-top:4px;font-family:var(--f-ui)}
+.steps strong{font-weight:500;display:block}
+.steps span{color:var(--ink-2);font-size:.92rem}
+.btn{display:inline-flex;align-items:center;gap:14px;background:var(--ink);color:var(--paper);padding:15px 28px;font-size:.9rem;letter-spacing:.08em;border-radius:99px;text-decoration:none;transition:gap .4s;font-weight:400}
+.btn:hover{gap:22px}
+.btn img{width:7px;filter:invert(1)}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--ink)}
+.btn.ghost img{filter:none}
+@media (max-width:820px){.custom{grid-template-columns:1fr}}
+
+/* footer */
+.foot{background:var(--ink);color:var(--silver);padding-block:72px 32px;padding-left:var(--gut);padding-right:var(--gut-r);overflow:hidden}
+.foot-in{max-width:1300px;margin:0 auto}
+.foot-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:36px;margin-bottom:64px}
+.foot h3{font-weight:400;font-size:.8rem;color:var(--muted-d);margin:0 0 14px;letter-spacing:.1em}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:.92rem}
+.foot a{text-decoration:none}.foot a:hover{text-decoration:underline}
+.foot .big{width:100%;filter:invert(.9)}
+:root.hc .foot .big{filter:invert(1)}
+.foot-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;margin-top:40px;font-size:.78rem;color:var(--muted-d)}
+.foot-row .jp{font-size:1rem;letter-spacing:.3em;color:var(--silver)}
+
+/* product page */
+.pdp{padding-top:calc(90px + env(safe-area-inset-top,0px));padding-left:var(--gut);padding-right:var(--gut-r);max-width:1440px;margin:0 auto}
+.crumbs{font-size:.8rem;color:var(--ink-2);display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.crumbs a{text-decoration:none}.crumbs a:hover{text-decoration:underline}
+.pdp-top{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(28px,5vw,80px);align-items:start}
+.pdp-stage{position:sticky;top:90px;aspect-ratio:1;background:var(--paper-2);display:grid;place-items:center;overflow:hidden;perspective:900px}
+.pdp-stage img{width:68%;filter:drop-shadow(0 34px 34px rgba(40,34,26,.24));transition:transform .6s cubic-bezier(.2,.7,.1,1)}
+.pdp-stage .jp-big{position:absolute;bottom:4%;left:5%;font-size:clamp(4rem,10vw,8rem);opacity:.08;line-height:1}
+.pdp-stage .tag{position:absolute;top:18px;right:18px;font-size:.75rem;display:flex;gap:6px;align-items:center}
+.pdp-stage .tag img{width:6px;filter:none}
+.pdp-info{display:flex;flex-direction:column;gap:16px;min-width:0;padding-bottom:20px}
+.pdp-info .eyebrow{font-size:.8rem;color:var(--ink-2)}
+.pdp-info h1{margin:0;font-weight:300;font-size:clamp(2.6rem,5.4vw,4.4rem);line-height:1;font-family:var(--f-ui);letter-spacing:.12em;direction:ltr;text-align:right}
+.pdp-info h1 .jp{font-size:.5em;margin-left:.3em;color:var(--ink-2);letter-spacing:.1em}
+.pdp-info .heb-name{font-size:1.1rem;margin-top:-4px}
+.pdp-info .pr{font-size:1.4rem;font-family:var(--f-ui);font-variant-numeric:tabular-nums}
+.pdp-info .lead{font-size:1.1rem;margin:0;text-wrap:pretty}
+.sizes-l{display:flex;justify-content:space-between;font-size:.85rem}
+.sizes-l a{font-size:.8rem}
+.sizes{display:flex;flex-wrap:wrap;gap:8px}
+.sizes button{min-width:3rem;padding:9px 12px;border:1px solid var(--line);font-size:.85rem;font-family:var(--f-ui)}
+.sizes button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.pdp-info .btn{justify-content:center}
+.assure{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;font-size:.78rem;color:var(--ink-2);text-align:center;border-block:1px solid var(--line);padding-block:14px}
+.assure b{display:block;color:var(--ink);font-weight:400;font-size:.85rem}
+details{border-bottom:1px solid var(--line)}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding:16px 0;display:flex;justify-content:space-between;align-items:center;font-weight:400}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-ui);font-size:1.2rem;transition:transform .3s}
+details[open] summary::after{transform:rotate(45deg)}
+details .body{padding-bottom:18px;color:var(--ink-2);font-size:.95rem}
+details .body ul{margin:0;padding-inline-start:1.1em}
+.size-table{width:100%;border-collapse:collapse;font-family:var(--f-ui);font-variant-numeric:tabular-nums;font-size:.85rem;margin-top:8px}
+.size-table th,.size-table td{border-bottom:1px solid var(--line);padding:7px 4px;text-align:center;font-weight:300}
+.size-table th{font-weight:400;color:var(--ink)}
+.tblwrap{overflow-x:auto}
+.pdp-story{margin:clamp(70px,10vw,140px) auto 0;max-width:1100px;display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(24px,5vw,70px);border-top:1px solid var(--line);padding-top:clamp(40px,6vw,70px)}
+.pdp-story h2{margin:0;font-weight:400;font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.2}
+.pdp-story h2 small{display:block;font-size:.72rem;letter-spacing:.3em;color:var(--ink-2);font-family:var(--f-ui);margin-bottom:12px;font-weight:300}
+.pdp-story p{font-size:clamp(1.05rem,1.7vw,1.25rem);line-height:1.8;margin:0 0 1em}
+.pdp-story .by{font-size:.85rem;color:var(--ink-2);display:flex;gap:10px;align-items:center}
+.pdp-story .by img{width:7px}
+.related{margin:clamp(70px,9vw,120px) 0 clamp(60px,8vw,100px)}
+.related h2{font-weight:400;font-size:1.4rem;margin:0 0 28px}
+.related h2 small{font-family:var(--f-ui);font-size:.72rem;letter-spacing:.3em;color:var(--ink-2);margin-inline-start:12px;font-weight:300}
+.related .grid{grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr));gap:30px 20px}
+.pager{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-block:22px;font-size:.9rem}
+.pager a{text-decoration:none}.pager a:hover{text-decoration:underline}
+@media (max-width:860px){.pdp-top{grid-template-columns:1fr}.pdp-stage{position:relative;top:0}.pdp-story{grid-template-columns:1fr}}
+
+/* policy pages */
+.doc{padding-top:calc(110px + env(safe-area-inset-top,0px));padding-bottom:100px;padding-left:var(--gut);padding-right:var(--gut-r);display:grid;grid-template-columns:1fr minmax(0,720px) 1fr}
+.doc>div{grid-column:2;min-width:0}
+.doc h1{font-weight:400;font-size:clamp(2rem,4.6vw,3.2rem);margin:0 0 .2em;line-height:1.15}
+.doc .en{font-family:var(--f-ui);font-size:.75rem;letter-spacing:.3em;color:var(--ink-2)}
+.doc .upd{font-size:.85rem;color:var(--ink-2);margin:18px 0 40px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.doc h2{font-weight:500;font-size:1.2rem;margin:2em 0 .5em}
+.doc p,.doc li{font-size:1rem;line-height:1.85}
+.doc ul{padding-inline-start:1.2em}
+.ph{background:rgba(196,160,80,.22);padding:0 .3em;border-radius:3px;white-space:nowrap}
+:root.hc .ph{background:#ffe680}
+.doc .back{display:inline-block;margin-top:40px}
+
+/* bag drawer */
+.drawer{position:fixed;inset:0;z-index:80;display:flex;justify-content:flex-start}
+.drawer[hidden]{display:none}
+.drawer .scrim{position:absolute;inset:0;background:rgba(23,22,21,.5)}
+.drawer .panel{position:relative;width:min(420px,100%);height:100%;background:var(--paper);padding:calc(24px + env(safe-area-inset-top,0px)) var(--gut-r) calc(24px + env(safe-area-inset-bottom,0px)) var(--gut);display:flex;flex-direction:column;gap:18px;overflow:auto}
+.drawer h2{margin:0;font-weight:400;font-size:1.4rem;display:flex;justify-content:space-between;align-items:center}
+.drawer .x{font-size:1.6rem;line-height:1;padding:4px 8px}
+.bag-list{list-style:none;margin:0;padding:0;display:grid;gap:14px;flex:1;align-content:start}
+.bag-list li{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:14px}
+.bag-list li img{width:64px;height:64px;object-fit:contain;background:var(--paper-2)}
+.bag-list .rm{font-size:.75rem;color:var(--ink-2);text-decoration:underline}
+.bag-tot{display:flex;justify-content:space-between;font-size:1.1rem;border-top:1px solid var(--ink);padding-top:14px;font-family:var(--f-ui)}
+
+/* accessibility */
+.a11y-btn{position:fixed;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:75;width:3.1rem;height:3.1rem;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.a11y-btn svg{width:1.6rem;height:1.6rem}
+.a11y-panel{position:fixed;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(80px + env(safe-area-inset-bottom,0px));z-index:76;width:min(320px,calc(100vw - 32px));background:var(--paper);border:1px solid var(--ink);padding:18px;display:grid;gap:10px;box-shadow:0 14px 40px rgba(0,0,0,.2)}
+.a11y-panel[hidden]{display:none}
+.a11y-panel h2{margin:0 0 4px;font-size:1.05rem;font-weight:500}
+.a11y-panel .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.a11y-panel .row .pm{display:flex;gap:6px}
+.a11y-panel .pm button{width:2.4rem;height:2.4rem;border:1px solid var(--ink);font-family:var(--f-ui)}
+.a11y-panel .tg{text-align:right;padding:10px 12px;border:1px solid var(--line);display:flex;justify-content:space-between;width:100%}
+.a11y-panel .tg[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.a11y-panel .tg[aria-pressed="true"]::after{content:"✓"}
+.a11y-panel .foot-l{display:flex;justify-content:space-between;font-size:.85rem;margin-top:4px}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,calc(100% + 80px));visibility:hidden;background:var(--ink);color:var(--paper);padding:12px 22px;font-size:.9rem;border-radius:99px;transition:transform .5s cubic-bezier(.2,.7,.1,1),visibility 0s .5s;z-index:85;max-width:calc(100vw - 32px);text-align:center}
+.toast.on{transform:translate(-50%,0);visibility:visible;transition:transform .5s cubic-bezier(.2,.7,.1,1)}
+
+/* section bars (part · title · link) */
+.bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;padding-block:10px;padding-left:var(--gut);padding-right:var(--gut-r);border-top:1px solid var(--ink);font-size:.72rem;position:relative;background:var(--paper)}
+.bar::after{content:"";position:absolute;left:var(--gut);right:var(--gut-r);bottom:-7px;height:3px;background:radial-gradient(circle,var(--ink) 1px,transparent 1.5px) 0 50%/16px 3px repeat-x;opacity:.45}
+.bar .t{font-weight:500;letter-spacing:.12em;text-align:center}
+.bar .t .sp{font-weight:300;font-size:.65rem;margin-inline-start:.6em}
+.bar a{justify-self:end;border:1px solid currentColor;padding:3px 11px;text-decoration:none;font-size:.68rem}
+.bar a:hover{background:var(--ink);color:var(--paper)}
+.bar.dk{background:var(--ink);color:var(--silver);border-color:rgba(207,208,207,.3)}
+.bar.dk::after{background-image:radial-gradient(circle,var(--silver) 1px,transparent 1.5px);bottom:-7px;z-index:1}
+.bar.dk a:hover{background:var(--silver);color:var(--ink)}
+
+/* hero annotations */
+.hud{position:absolute;inset:0;pointer-events:none}
+.hud svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.hud polyline{stroke:var(--ink);stroke-width:1;fill:none;vector-effect:non-scaling-stroke}
+.hud .dot{position:absolute;width:10px;height:10px;border:1px solid var(--ink);background:var(--paper);transform:translate(-50%,-50%)}
+.hud .dot::after{content:"";position:absolute;inset:2px;background:var(--ink)}
+.hud .lbl{position:absolute;font-size:.68rem;line-height:1.45;background:var(--paper);border:1px solid var(--ink);padding:6px 10px;white-space:nowrap;text-align:right;transform:translateY(-50%)}
+.hud .lbl b{display:block;font-weight:500;font-size:.78rem}
+.hud .lbl .sp{font-size:.58rem;letter-spacing:.18em}
+@media (max-width:900px){.hud{display:none}}
+.hdr-end{display:flex;align-items:center;gap:22px}
+.hdr-start{display:flex;align-items:center;gap:14px}
+
+/* three-line menu */
+.burger{width:2.5rem;height:2.5rem;position:relative;margin-inline-start:-.4rem}
+.burger span{position:absolute;left:50%;top:50%;width:1.5rem;height:1.5px;background:currentColor;transition:transform .5s cubic-bezier(.7,0,.2,1),opacity .3s}
+.burger span:nth-child(1){transform:translate(-50%,-7px)}
+.burger span:nth-child(2){transform:translate(-50%,0)}
+.burger span:nth-child(3){transform:translate(-50%,7px)}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translate(-50%,0) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translate(-50%,0) rotate(-45deg)}
+:root.hc.menu-open .hdr{background:var(--ink);color:var(--paper)}
+:root.hc.menu-open .hdr .mark{filter:invert(1)}
+.menu{position:fixed;inset:0;z-index:49;background:var(--ink);color:var(--silver);overflow:auto;overscroll-behavior:contain;
+  padding-top:calc(100px + env(safe-area-inset-top,0px));padding-bottom:calc(40px + env(safe-area-inset-bottom,0px));padding-left:var(--gut);padding-right:var(--gut-r);
+  clip-path:circle(0% at calc(100% - 2.6rem) 2.4rem);transition:clip-path .75s cubic-bezier(.7,0,.2,1)}
+.menu.on{clip-path:circle(150% at calc(100% - 2.6rem) 2.4rem)}
+.menu[hidden]{display:none}
+.menu-in{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(36px,6vw,100px)}
+.m-main{list-style:none;margin:0;padding:0;border-top:1px solid rgba(207,208,207,.18)}
+.m-main a{display:flex;align-items:baseline;gap:18px;text-decoration:none;font-size:clamp(1.9rem,5vw,3.9rem);line-height:1.2;font-weight:300;padding-block:.14em;border-bottom:1px solid rgba(207,208,207,.18);transition:color .3s,padding .4s}
+.m-main a:hover,.m-main a:focus-visible{color:#fff;padding-inline-start:.3em}
+.m-main .n{font-family:var(--f-ui);font-size:.72rem;letter-spacing:.2em;color:var(--muted-d);min-width:3em}
+.m-main .en{font-family:var(--f-ui);font-size:.72rem;letter-spacing:.24em;color:var(--muted-d);margin-inline-start:auto;white-space:nowrap}
+.menu.on .m-main li{animation:mIn .8s cubic-bezier(.2,.7,.1,1) both;animation-delay:calc(var(--i) * 55ms + 180ms)}
+@keyframes mIn{from{opacity:0;transform:translateY(22px)}}
+.m-side{min-width:0}
+.m-side h3{font-size:.8rem;font-weight:400;color:var(--muted-d);margin:0 0 12px;letter-spacing:.06em}
+.m-side h3 .sp{font-size:.62rem;margin-inline-start:6px}
+.m-pieces{list-style:none;margin:0 0 36px;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 16px}
+.m-pieces a{display:flex;gap:10px;align-items:center;text-decoration:none;padding:5px 0;font-size:.95rem}
+.m-pieces a:hover{color:#fff}
+.m-pieces img{width:36px;height:36px;object-fit:contain;flex:none}
+.m-pieces .jp{opacity:.5;font-size:.85rem}
+.m-info{list-style:none;margin:0 0 20px;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px;font-size:.95rem}
+.m-info a{text-decoration:none}.m-info a:hover{color:#fff;text-decoration:underline}
+.m-foot{grid-column:1/-1;display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;border-top:1px solid rgba(207,208,207,.2);padding-top:18px;font-size:.78rem;color:var(--muted-d)}
+.m-foot .jp{letter-spacing:.3em;color:var(--silver)}
+:root.hc .menu .ph{color:#000}
+@media (max-width:860px){.menu-in{grid-template-columns:1fr}}
+.clock{font-size:.68rem;letter-spacing:.2em;font-family:var(--f-ui);text-align:left;line-height:1.3}
+@media (max-width:1000px){.clock{display:none}}
+
+/* her / him */
+.gender{padding-block:clamp(70px,9vw,120px);padding-left:var(--gut);padding-right:var(--gut-r);max-width:1440px;margin:0 auto}
+.g-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:760px){.g-grid{grid-template-columns:1fr}}
+.g-tile{position:relative;aspect-ratio:4/5;max-height:86vh;width:100%;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(18px,2.4vw,30px);background:var(--paper-2);color:var(--ink);text-align:right}
+.g-tile.dk{background:var(--ink);color:var(--silver)}
+.g-tile .gi{position:absolute;pointer-events:none;filter:drop-shadow(0 24px 24px rgba(30,26,20,.28));transition:transform 1.1s cubic-bezier(.2,.7,.1,1)}
+.g-tile.dk .gi{filter:drop-shadow(0 26px 28px rgba(0,0,0,.6))}
+.g-tile:hover .gi,.g-tile:focus-visible .gi{transform:scale(1.06) rotate(-4deg)}
+.g-tile .top{position:relative;display:flex;justify-content:space-between;gap:12px;font-size:.75rem}
+.g-tile .top .sp{font-size:.65rem}
+.g-tile .bot{position:relative}
+.g-tile h3{font-weight:300;font-size:clamp(2.8rem,6.4vw,5.6rem);line-height:1;margin:0}
+.g-tile .names{font-family:var(--f-ui);font-size:.75rem;letter-spacing:.2em;margin-top:10px;opacity:.75}
+.g-tile .go{display:inline-block;margin-top:14px;border:1px solid currentColor;padding:4px 12px;font-size:.75rem}
+.gender .note{margin-top:18px;font-size:.88rem;color:var(--ink-2)}
+
+/* vision */
+.vision{border-top:1px solid var(--line);padding-block:clamp(80px,11vw,150px);padding-left:max(6vw,var(--gut));padding-right:max(6vw,var(--gut-r));
+  display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,6vw,100px);align-items:start;max-width:1440px;margin:0 auto}
+.vision h2{font-size:clamp(4.4rem,13vw,10rem);line-height:.9;font-weight:300;margin:0}
+.vision h2 small{display:block;font-size:.75rem;letter-spacing:.3em;color:var(--ink-2);font-family:var(--f-ui);margin-bottom:22px;font-weight:300}
+.vision .lead{font-size:clamp(1.2rem,2.2vw,1.6rem);line-height:1.6;margin:28px 0 0;text-wrap:pretty}
+.vision .en{direction:ltr;text-align:right;font-size:.88rem;color:var(--ink-2);margin-top:18px}
+.threads{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink);min-width:0}
+.threads li{display:grid;grid-template-columns:6.4rem minmax(0,1fr);gap:18px;padding:22px 0;border-bottom:1px solid var(--line)}
+.threads .k{font-family:var(--f-jp);font-size:2.1rem;line-height:1.05}
+.threads .k small{display:block;font-family:var(--f-ui);font-size:.66rem;letter-spacing:.14em;color:var(--ink-2);margin-top:8px}
+.threads strong{display:block;font-weight:500;font-size:1.12rem}
+.threads p{margin:4px 0 0;color:var(--ink-2)}
+.threads-h{font-size:.72rem;letter-spacing:.2em;font-family:var(--f-ui);margin-bottom:10px;display:flex;justify-content:space-between}
+@media (max-width:860px){.vision{grid-template-columns:1fr}}
+
+/* sizing */
+.sizing{padding-block:clamp(80px,10vw,140px);padding-left:max(6vw,var(--gut));padding-right:max(6vw,var(--gut-r));display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,90px);max-width:1440px;margin:0 auto;align-items:start}
+.sizing h2{font-weight:400;font-size:clamp(2.2rem,5vw,3.8rem);margin:0 0 .3em;line-height:1.05}
+.sizing h2 small{display:block;font-size:.75rem;letter-spacing:.3em;color:var(--ink-2);font-family:var(--f-ui);margin-bottom:16px;font-weight:300}
+.sizing .std{border:1px solid var(--ink);padding:14px 16px;margin:20px 0 8px;font-size:.95rem}
+.sizing .std b{font-weight:500}
+.diagram{width:min(100%,380px);margin:30px auto 0;display:block;color:var(--ink)}
+.sizing .tips{margin:22px 0 0;padding-inline-start:1.1em;color:var(--ink-2);font-size:.95rem}
+.sizing .size-table{font-size:.95rem}
+.sizing .size-table td,.sizing .size-table th{padding:11px 4px}
+@media (max-width:860px){.sizing{grid-template-columns:1fr}}
+
+
+/* product page frame + spec card */
+.pdp-stage::before{content:"";position:absolute;inset:14px;pointer-events:none;z-index:1;
+  background:linear-gradient(var(--ink),var(--ink)) top left/18px 1px no-repeat,linear-gradient(var(--ink),var(--ink)) top left/1px 18px no-repeat,
+  linear-gradient(var(--ink),var(--ink)) top right/18px 1px no-repeat,linear-gradient(var(--ink),var(--ink)) top right/1px 18px no-repeat,
+  linear-gradient(var(--ink),var(--ink)) bottom left/18px 1px no-repeat,linear-gradient(var(--ink),var(--ink)) bottom left/1px 18px no-repeat,
+  linear-gradient(var(--ink),var(--ink)) bottom right/18px 1px no-repeat,linear-gradient(var(--ink),var(--ink)) bottom right/1px 18px no-repeat}
+.spec{position:absolute;bottom:26px;right:26px;z-index:2;border:1px solid var(--ink);background:var(--paper);font-size:.72rem;min-width:200px}
+.spec .h{background:var(--ink);color:var(--paper);padding:3px 8px;display:flex;justify-content:space-between;font-family:var(--f-ui);letter-spacing:.2em;font-size:.6rem}
+.spec dl{margin:0;padding:6px 8px;display:grid;grid-template-columns:auto 1fr;gap:3px 12px}
+.spec dt{color:var(--ink-2)}.spec dd{margin:0}
+@media (max-width:520px){.spec{display:none}}
+.jp-note{font-size:.85rem;color:var(--ink-2);border-inline-start:2px solid var(--ink);padding-inline-start:10px}
+
+@media (prefers-reduced-motion:reduce){
+  .marq-track,.custom .ring-stage::after,.scroll-cue::after{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div dir="rtl" lang="he" id="app">
+<a class="skip" href="#main" id="skipLink">דילוג לתוכן הראשי</a>
+
+<header class="hdr">
+  <div class="hdr-start">
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="פתיחת התפריט"><span></span><span></span><span></span></button>
+    <a href="#home" aria-label="Duni, חזרה לעמוד הבית"><img class="mark" src="assets/logo.png" alt="Duni"></a>
+  </div>
+  <nav aria-label="ניווט ראשי"><a href="#drop">הדרופ החדש</a><a href="#collection">הקולקציה</a><a href="#for">לנשים ולגברים</a><a href="#vision">החזון</a><a href="#sizing">מידות</a></nav>
+  <div class="hdr-end"><span class="clock" lang="en" aria-hidden="true">local time<br>tlv <span id="clock">--:--</span></span><button class="bag" id="bagBtn" type="button" aria-haspopup="dialog">סל (<span id="bagN">0</span>)</button></div>
+</header>
+
+<nav class="menu" id="menu" hidden aria-label="תפריט האתר">
+  <div class="menu-in">
+    <ul class="m-main">
+      <li style="--i:0"><a href="#home"><span class="n" lang="en">—</span><span class="t">עמוד הבית</span><span class="en" lang="en">home</span></a></li>
+      <li style="--i:1"><a href="#drop"><span class="n" lang="en">01</span><span class="t">הדרופ החדש</span><span class="en" lang="en">latest drop</span></a></li>
+      <li style="--i:2"><a href="#collection"><span class="n" lang="en">02</span><span class="t">הקולקציה</span><span class="en" lang="en">collection</span></a></li>
+      <li style="--i:3"><a href="#for"><span class="n" lang="en">03</span><span class="t">לנשים ולגברים</span><span class="en" lang="en">her · him</span></a></li>
+      <li style="--i:4"><a href="#vision"><span class="n" lang="en">04</span><span class="t">החזון</span><span class="en" lang="en">vision</span></a></li>
+      <li style="--i:5"><a href="#sizing"><span class="n" lang="en">05</span><span class="t">מידות</span><span class="en" lang="en">sizing</span></a></li>
+      <li style="--i:6"><a href="#custom"><span class="n" lang="en">06</span><span class="t">בהזמנה אישית</span><span class="en" lang="en">one of one</span></a></li>
+    </ul>
+    <div class="m-side">
+      <h3>כל התכשיטים <span lang="en" class="sp">pieces</span></h3>
+      <ul class="m-pieces" id="mPieces"></ul>
+      <h3>מידע ומדיניות <span lang="en" class="sp">info</span></h3>
+      <ul class="m-info">
+        <li><a href="#shipping">משלוחים והחזרות</a></li><li><a href="#cancel">מדיניות ביטולים</a></li><li><a href="#care">שמירה וניקוי של כסף</a></li>
+        <li><a href="#privacy">מדיניות פרטיות</a></li><li><a href="#terms">תקנון האתר</a></li><li><a href="#accessibility">הצהרת נגישות</a></li>
+      </ul>
+    </div>
+    <div class="m-foot"><span class="jp" lang="ja">手作りのジュエリー</span><span>אינסטגרם <span class="ph">@שם_המשתמש</span> · וואטסאפ <span class="ph">מספר טלפון</span></span><span class="sp" lang="en">small things carry big energy</span></div>
+  </div>
+</nav>
+
+<main id="main" tabindex="-1">
+<!-- ============ HOME ============ -->
+<div class="view" id="v-home">
+  <section class="hero" id="hero" aria-label="Duni, תכשיטים בעבודת יד">
+    <div class="corner c-tl" lang="en"><span class="sp">small things<br>carry<br>big energy</span><span class="dash"></span></div>
+    <div class="corner c-tr jp" lang="ja" title="tezukuri no juerī · תכשיטים בעבודת יד">手作りのジュエリー</div>
+    <div class="corner c-bl"><span class="jp" lang="ja">情熱</span><span class="dash"></span><span class="he">חומרים אמיתיים<br>תהליך איטי<br>תכשיטים על-זמניים</span></div>
+    <img class="corner c-br" src="assets/star.png" alt="">
+    <div class="logo-wrap" id="logoWrap"><img src="assets/logo.png" alt="Duni"></div>
+    <div class="hero-tag corner-t" id="heroTag"><span class="he">תכשיטים בעבודת יד</span><span class="sp" lang="en">hand made jewelry</span></div>
+    <div class="burst-copy" id="burstCopy" aria-hidden="true"><h2>הקולקציה</h2><p class="sp" lang="en">the collection · sterling silver 925</p></div>
+    <div id="orbits" aria-hidden="true"></div>
+    <div class="piece hero-ring" id="heroRing"><img src="assets/pieces/signet.webp" alt="טבעת יורו: פס כסף רחב מרוקע עם אבן שחורה">
+      <div class="hud" id="hud" aria-hidden="true">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="56,20 118,20 132,9"/><polyline points="14,62 -28,62 -40,76"/><polyline points="70,84 70,104 106,104"/></svg>
+        <span class="dot" style="left:56%;top:20%"></span><span class="dot" style="left:14%;top:62%"></span><span class="dot" style="left:70%;top:84%"></span>
+        <span class="lbl" style="left:132%;top:9%"><b>אבן שחורה</b><span class="sp" lang="en">black stone · bezel set</span></span>
+        <span class="lbl" style="right:140%;top:76%"><b>פס מרוקע ביד</b><span class="sp" lang="en">hand-hammered band</span></span>
+        <span class="lbl" style="left:106%;top:104%"><b>כסף 925</b><span class="sp" lang="en">sterling silver</span></span>
+      </div>
+    </div>
+  </section>
+
+  <div class="marq" aria-hidden="true"><div class="marq-track" id="marq"></div></div>
+
+  <section class="manifesto" aria-labelledby="manH">
+    <div>
+      <p class="jp" lang="ja" aria-hidden="true">情熱</p>
+      <h2 class="sr" id="manH">איך נולד כל תכשיט</h2>
+      <p>כל תכשיט מתחיל כחוט כסף ישר. הוא מכופף, מרוקע בפטיש ומלוטש ביד, על שולחן עבודה אחד קטן. לכן אין שני תכשיטים שיוצאים זהים.</p>
+      <p>קצוות לא אחידים, סימני פטיש, צורות שמזכירות חלוקי נחל ומים. זו כל הנקודה.</p>
+      <p class="jp-note">情熱 <span lang="en">jōnetsu</span> (ג׳ונֶצוּ) ביפנית: תשוקה. <span lang="en">passion.</span></p>
+    </div>
+  </section>
+
+  <div class="bar dk" aria-hidden="true"><span class="sp" lang="en">part 01</span><span class="t">הדרופ האחרון<span class="sp" lang="en">latest drop</span></span><a href="#drop" tabindex="-1">לצפייה</a></div>
+  <section class="drop" id="drop" aria-labelledby="dropH">
+    <div class="drop-head">
+      <div>
+        <div class="eyebrow">הדרופ האחרון · <span class="sp" lang="en">latest drop</span></div>
+        <h2 id="dropH" lang="en">sen<span class="jp" lang="ja">線</span></h2>
+        <p>線 (<span lang="en">sen</span>) ביפנית: קו. חוט כסף אחד שמצויר על האצבע כמו קו של עיפרון: גל, שרבוט, לולאות וקשר. ארבע טבעות חדשות.</p>
+      </div>
+      <div class="rail-btns"><button type="button" id="railPrev" aria-label="הקודם">→</button><button type="button" id="railNext" aria-label="הבא">←</button></div>
+    </div>
+    <div class="rail" id="rail" tabindex="0" aria-label="טבעות הדרופ, אפשר לגלול הצידה"></div>
+  </section>
+
+  <div class="bar" aria-hidden="true"><span class="sp" lang="en">part 02</span><span class="t">הקולקציה<span class="sp" lang="en">collection</span></span><a href="#collection" tabindex="-1">הכל</a></div>
+  <section class="coll" id="collection" aria-labelledby="collH">
+    <div class="sec-head">
+      <h2 id="collH"><small lang="en">the collection · sterling silver 925</small>הקולקציה</h2>
+      <div class="filters" id="filters" role="group" aria-label="סינון לפי סוג"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <div class="bar" aria-hidden="true"><span class="sp" lang="en">part 03</span><span class="t">לנשים ולגברים<span class="sp" lang="en">her · him</span></span><a href="#for" tabindex="-1">לבחירה</a></div>
+  <section class="gender" id="for" aria-labelledby="forH">
+    <div class="sec-head"><h2 id="forH"><small lang="en">for her · for him</small>לנשים ולגברים</h2></div>
+    <div class="g-grid">
+      <button class="g-tile" type="button" data-g="her" aria-label="לתכשיטים לנשים">
+        <img class="gi" src="assets/pieces/lariat.webp" alt="" style="width:44%;left:6%;top:12%">
+        <img class="gi" src="assets/pieces/earrings.webp" alt="" style="width:40%;right:8%;top:16%">
+        <img class="gi" src="assets/pieces/wave.webp" alt="" style="width:25%;right:30%;top:40%">
+        <div class="top"><span>5 תכשיטים</span><span class="sp" lang="en">for her</span></div>
+        <div class="bot"><h3>לנשים</h3><div class="names" lang="en">nami · rakugaki · wa · koishi · shizuku</div><span class="go">לקולקציה לנשים ←</span></div>
+      </button>
+      <button class="g-tile dk" type="button" data-g="him" aria-label="לתכשיטים לגברים">
+        <img class="gi" src="assets/pieces/signet.webp" alt="" style="width:38%;right:10%;top:10%">
+        <img class="gi" src="assets/pieces/bracelet.webp" alt="" style="width:40%;left:8%;top:18%">
+        <img class="gi" src="assets/pieces/pendant.webp" alt="" style="width:38%;left:30%;top:46%">
+        <div class="top"><span>5 תכשיטים</span><span class="sp" lang="en">for him</span></div>
+        <div class="bot"><h3>לגברים</h3><div class="names" lang="en">yoru · tsuchi · kusari · ishi · musubi</div><span class="go">לקולקציה לגברים ←</span></div>
+      </button>
+    </div>
+    <p class="note">החלוקה היא רק נקודת התחלה. כל התכשיטים של Duni מתאימים לכל מי שאוהב אותם.</p>
+  </section>
+
+  <div class="bar" aria-hidden="true"><span class="sp" lang="en">part 04</span><span class="t">החזון<span class="sp" lang="en">vision</span></span><a href="#vision" tabindex="-1">לקרוא</a></div>
+  <section class="vision" id="vision" aria-labelledby="visionH">
+    <div>
+      <h2 id="visionH"><small lang="en">reality, by hand · החזון</small>החזון</h2>
+      <p class="lead">Duni רוצה להחזיר לתכשיט את מה שהתעשייה איבדה בדרך: את היד, את הזמן ואת האופי. להביא לעולם משהו שונה בעיצוב ובאמנות, תכשיט שמרגיש כמו יצירה ולא כמו מוצר.</p>
+      <p class="en" lang="en">Duni exists to bring something different into design and art: jewelry that feels like a piece of work, not a product. Small things carry big energy.</p>
+    </div>
+    <div>
+      <div class="threads-h"><span lang="en">core threads</span><span>חמישה עקרונות</span></div>
+      <ul class="threads">
+        <li><div class="k" lang="ja">手作り<small lang="en">tezukuri</small></div><div><strong>עבודת יד</strong><p>כל תכשיט נעשה ביד מההתחלה ועד הסוף. בלי פס ייצור ובלי תבניות.</p></div></li>
+        <li><div class="k" lang="ja">侘寂<small lang="en">wabi-sabi</small></div><div><strong>היופי שבחוסר שלמות</strong><p>קו עקום, סימן פטיש, צורה לא סימטרית. לא מתקנים אותם, הם מה שהופך תכשיט לחי.</p></div></li>
+        <li><div class="k" lang="ja">ゆっくり<small lang="en">yukkuri</small></div><div><strong>לאט</strong><p>עובדים לאט ובכמויות קטנות. עדיף תכשיט אחד שנשאר שנים על פני עשרה שנזרקים.</p></div></li>
+        <li><div class="k" lang="ja">一点物<small lang="en">ippinmono</small></div><div><strong>אחד ויחיד</strong><p>אין שני תכשיטים זהים. מה שעונדים הוא שלך בלבד.</p></div></li>
+        <li><div class="k" lang="ja">情熱<small lang="en">jōnetsu</small></div><div><strong>תשוקה</strong><p>Duni נולד מאהבה לאמנות ולעיצוב, וזה מה שמניע כל תכשיט.</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="bar" aria-hidden="true"><span class="sp" lang="en">part 05</span><span class="t">מידות<span class="sp" lang="en">sizing</span></span><a href="#sizing" tabindex="-1">טבלה</a></div>
+  <section class="sizing" id="sizing" aria-labelledby="sizingH">
+    <div>
+      <h2 id="sizingH"><small lang="en">ring sizing · iso 8653</small>איך מודדים אצבע</h2>
+      <div class="std">אנחנו עובדים לפי <b>השיטה האירופית</b> (תקן ISO 8653): <b>המידה היא היקף פנים הטבעת במילימטרים.</b> מידה 52 היא טבעת שההיקף הפנימי שלה 52 מ״מ.</div>
+      <svg class="diagram" viewBox="0 0 320 250" role="img" aria-label="שרטוט: ההיקף של הטבעת הוא המידה, הקוטר הוא המרחק מצד לצד בפנים">
+        <circle cx="160" cy="118" r="92" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 5"/>
+        <circle cx="160" cy="118" r="78" fill="none" stroke="currentColor" stroke-width="10" opacity=".14"/>
+        <line x1="82" y1="118" x2="238" y2="118" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M82 118l9-5v10zM238 118l-9-5v10z" fill="currentColor"/>
+        <circle cx="160" cy="26" r="4" fill="currentColor"/>
+        <text x="160" y="108" text-anchor="middle" font-size="13" fill="currentColor" font-family="Heebo, sans-serif">קוטר פנימי</text>
+        <text x="160" y="16" text-anchor="middle" font-size="13" fill="currentColor" font-family="Heebo, sans-serif">היקף = המידה</text>
+        <text x="160" y="238" text-anchor="middle" font-size="11" fill="currentColor" font-family="Jost, sans-serif" letter-spacing="2">EU 52 = 52 MM</text>
+      </svg>
+      <ol class="steps">
+        <li><b>01</b><div><strong>פס נייר</strong><span>כורכים פס נייר דק סביב בסיס האצבע ומסמנים בעט איפה הוא נפגש.</span></div></li>
+        <li><b>02</b><div><strong>מודדים בסרגל</strong><span>פורשים את הפס ומודדים את האורך במילימטרים. זו המידה.</span></div></li>
+        <li><b>03</b><div><strong>בודקים מול הטבלה</strong><span>יש לך טבעת שמתאימה? מודדים את הקוטר הפנימי שלה ומחפשים אותו בטבלה.</span></div></li>
+      </ol>
+    </div>
+    <div>
+      <div class="tblwrap"><table class="size-table" id="sizeTable"><caption class="sr">טבלת מידות טבעות</caption><thead><tr><th scope="col">מידה (EU)</th><th scope="col">היקף (מ״מ)</th><th scope="col">קוטר (מ״מ)</th><th scope="col">US בערך</th></tr></thead><tbody></tbody></table></div>
+      <ul class="tips">
+        <li>מודדים בסוף היום, כשהאצבעות קצת יותר גדולות, ולא כשהידיים קרות.</li>
+        <li>אם פרק האצבע רחב, בוחרים מידה שעוברת אותו.</li>
+        <li>לטבעות רחבות (יורו, צוצ׳י) כדאי לבחור מידה אחת למעלה.</li>
+        <li>מוסובי פתוחה ומתכווננת, אז היא מתאימה לרוב המידות.</li>
+        <li>בין שתי מידות? עדיף את הגדולה.</li>
+      </ul>
+    </div>
+  </section>
+
+
+  <div class="bar" aria-hidden="true"><span class="sp" lang="en">part 06</span><span class="t">בהזמנה אישית<span class="sp" lang="en">one of one</span></span><a href="#custom" tabindex="-1">להתחיל</a></div>
+  <section class="custom" id="custom" aria-labelledby="customH">
+    <div class="ring-stage"><img src="assets/pieces/signet.webp" alt="טבעת בהזמנה אישית"></div>
+    <div>
+      <div class="en-sub" lang="en">one of one</div>
+      <h2 id="customH"><span class="jp" lang="ja">一点物</span>טבעת אחת בעולם, שנעשית רק בשבילך.</h2>
+      <p class="jp-note">一点物 (<span lang="en">ippinmono</span>) ביפנית: פריט אחד ויחיד.</p>
+      <p>מביאים אבן, צורה, מילה או סיפור. מעצבים איתך את הטבעת ומכינים אותה ביד, והיא תהיה היחידה מסוגה.</p>
+      <ol class="steps">
+        <li><b>01</b><div><strong>מספרים את הסיפור</strong><span>שולחים תמונה, סקיצה או רק רעיון.</span></div></li>
+        <li><b>02</b><div><strong>סקיצה ועבודת פטיש</strong><span>מסכמים יחד על העיצוב, ואז הטבעת מכופפת ומרוקעת ביד.</span></div></li>
+        <li><b>03</b><div><strong>היא שלך</strong><span>מלוטשת, ארוזה ונשלחת עם סימן ה-✦.</span></div></li>
+      </ol>
+      <a class="btn" href="#custom" id="customBtn">להתחיל עיצוב אישי <img src="assets/star.png" alt=""></a>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PRODUCT ============ -->
+<div class="view" id="v-product" hidden></div>
+
+<!-- ============ DOC ============ -->
+<div class="view" id="v-doc" hidden></div>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-cols">
+      <div><h3>Duni</h3><ul><li><a href="#drop">הדרופ החדש</a></li><li><a href="#collection">הקולקציה</a></li><li><a href="#for">לנשים ולגברים</a></li><li><a href="#vision">החזון</a></li><li><a href="#custom">בהזמנה אישית</a></li></ul></div>
+      <div><h3>מידע ומדיניות</h3><ul><li><a href="#shipping">משלוחים והחזרות</a></li><li><a href="#cancel">מדיניות ביטולים</a></li><li><a href="#privacy">מדיניות פרטיות</a></li><li><a href="#terms">תקנון האתר</a></li><li><a href="#accessibility">הצהרת נגישות</a></li></ul></div>
+      <div><h3>יצירת קשר</h3><ul><li>אינסטגרם: <span class="ph">@שם_המשתמש</span></li><li>וואטסאפ: <span class="ph">מספר טלפון</span></li><li>מייל: <span class="ph">כתובת מייל</span></li></ul></div>
+      <div><h3 lang="en" class="sp">care</h3><ul><li><a href="#care">שמירה וניקוי של כסף</a></li><li><a href="#sizing">מדריך מידות טבעות</a></li></ul></div>
+    </div>
+    <img class="big" src="assets/logo.png" alt="Duni">
+    <div class="foot-row">
+      <span class="jp" lang="ja">手作りのジュエリー</span>
+      <span class="sp" lang="en">small things carry big energy</span>
+      <span>© 2026 Duni · כל הזכויות שמורות</span>
+    </div>
+  </div>
+</footer>
+
+<div class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="bagH">
+  <div class="scrim" id="drawerScrim"></div>
+  <div class="panel">
+    <h2 id="bagH">הסל שלך <button class="x" type="button" id="drawerX" aria-label="סגירת הסל">×</button></h2>
+    <ul class="bag-list" id="bagList"></ul>
+    <div class="bag-tot"><span>סה״כ</span><span id="bagTot">₪0</span></div>
+    <button class="btn" type="button" id="checkout">המשך לתשלום <img src="assets/star.png" alt=""></button>
+  </div>
+</div>
+
+<button class="a11y-btn" type="button" id="a11yBtn" aria-label="תפריט נגישות" aria-expanded="false" aria-controls="a11yPanel">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="4.2" r="1.7" fill="currentColor" stroke="none"/><path d="M4.5 8.2c2.5.9 5 1.3 7.5 1.3s5-.4 7.5-1.3M12 9.5v5.2M12 14.7l-3.2 6M12 14.7l3.2 6"/></svg>
+</button>
+<div class="a11y-panel" id="a11yPanel" hidden role="dialog" aria-labelledby="a11yH">
+  <h2 id="a11yH">התאמות נגישות</h2>
+  <div class="row"><span>גודל טקסט</span><div class="pm"><button type="button" id="tMinus" aria-label="הקטנת טקסט">−</button><button type="button" id="tPlus" aria-label="הגדלת טקסט">+</button></div></div>
+  <button class="tg" type="button" data-k="hc" aria-pressed="false">ניגודיות גבוהה</button>
+  <button class="tg" type="button" data-k="ul" aria-pressed="false">הדגשת קישורים</button>
+  <button class="tg" type="button" data-k="rf" aria-pressed="false">גופן קריא</button>
+  <button class="tg" type="button" data-k="still" aria-pressed="false">עצירת אנימציות</button>
+  <div class="foot-l"><button type="button" id="a11yReset" style="text-decoration:underline">איפוס</button><a href="#accessibility">הצהרת נגישות</a></div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const P = [
+  {id:'wave',g:'her',name:'nami',he:'נאמי',jp:'波',mean:'גל',cat:'rings',price:180,drop:true,
+   lead:'טבעת חוט דקה עם גל אחד רך בחלק העליון, כמו קו שמישהו צייר על האצבע.',
+   story:['נאמי היא הטבעת הכי שקטה בקולקציה. חוט כסף אחד, עגול ודק, שבחלק העליון שלו מכופף ביד גל אחד קטן.','אין שתי טבעות עם אותו גל בדיוק, כי כל כיפוף נעשה ביד ולא בתבנית. אפשר לענוד אותה לבד, או לערום אותה עם טבעות נוספות.']},
+  {id:'scribble',g:'her',name:'rakugaki',he:'רקוגאקי',jp:'落書き',mean:'שרבוט',cat:'rings',price:260,drop:true,
+   lead:'טבעת חוט רחבה שמתפתלת ללולאות ולזיגזגים. שרבוט שאפשר לענוד.',
+   story:['רקוגאקי ביפנית זה שרבוט: הקווים שמציירים בשולי המחברת בלי לחשוב. הטבעת הזו היא בדיוק זה, חוט כסף שמתפתל קדימה ואחורה עד שהוא הופך לצורה.','היא רחבה ומשחקית, וכל זווית שלה נראית אחרת. החוט מרוקע לכל אורכו ולכן הוא תופס את האור בכל תנועה של היד.']},
+  {id:'loops',g:'her',name:'wa',he:'ווה',jp:'輪',mean:'מעגל',cat:'rings',price:240,drop:true,
+   lead:'לולאות מרוקעות שמחוברות בשורה לאורך חזית הטבעת.',
+   story:['ווה פירושו מעגל, וגם חיבור. לולאות קטנות בגדלים שונים מתחברות יחד על פס כסף דק, וכל אחת מרוקעת בפטיש.','הלולאות לא מושלמות, וזה בכוונה. כל טבעת יוצאת עם קצב קצת אחר של עיגולים.']},
+  {id:'openring',g:'him',name:'musubi',he:'מוסובי',jp:'結び',mean:'קשר',cat:'rings',price:220,drop:true,
+   lead:'פס מרוקע פתוח ששני קצותיו מתעקלים ועוברים זה ליד זה. מתכווננת.',
+   story:['מוסובי זה קשר. הטבעת לא נסגרת: שני הקצוות שלה מתעקלים לשתי קשתות שעוברות אחת ליד השנייה על האצבע, כמו שני קווים שנפגשים.','בגלל שהיא פתוחה, אפשר להתאים אותה בעדינות לאצבע. כדאי לכוון אותה פעם אחת ולא לכופף שוב ושוב.']},
+  {id:'signet',g:'him',name:'yoru',he:'יורו',jp:'夜',mean:'לילה',cat:'rings',price:480,drop:false,
+   lead:'פס כסף רחב ומרוקע, עם אבן שחורה בשיבוץ כסף מוגבה.',
+   story:['יורו היא הטבעת הכי נוכחת של Duni. פס כסף רחב שמכוסה כולו בסימני פטיש, ועליו אבן שחורה בשיבוץ מוגבה.','הכסף המבריק והאבן הכהה יוצרים יחד את הניגוד של יום ולילה, ומכאן השם.']},
+  {id:'band',g:'him',name:'tsuchi',he:'צוצ׳י',jp:'槌',mean:'פטיש',cat:'rings',price:190,drop:false,
+   lead:'פס שטוח שמכוסה בסימני פטיש. פשוטה ויציבה, ליום-יום.',
+   story:['צוצ׳י זה הפטיש, הכלי שנותן לכל התכשיטים של Duni את הטקסטורה שלהם. כאן הוא הכל: פס כסף שטוח בלי שום תוספת, רק סימני הרוקוע שתופסים את האור.','זו טבעת ליום-יום, ועם הזמן היא מקבלת ברק משלה מהשימוש.']},
+  {id:'earrings',g:'her',name:'koishi',he:'קויישי',jp:'小石',mean:'חלוק נחל',cat:'ears',price:260,drop:false,
+   lead:'חישוקים גדולים בצורה חופשית על וו. כל אחד בצורה של חלוק אחר.',
+   story:['קויישי זה חלוק קטן. שני החישוקים לא זהים, וגם לא אמורים להיות: כל אחד מקבל צורה משלו, כמו שני חלוקים שנאספו מאותו חוף.','החוט דק ומרוקע לכל אורכו, כך שהם נראים גדולים אבל מרגישים קלים.']},
+  {id:'lariat',g:'her',name:'shizuku',he:'שיזוקו',jp:'雫',mean:'טיפה',cat:'necks',price:390,drop:false,
+   lead:'שרשרת דקה עם מעגלים מרוקעים שנופלים לטיפה.',
+   story:['שיזוקו היא טיפה. מעגלים מרוקעים בגדלים שונים יושבים לאורך שרשרת דקה: הם מתחילים קטנים ליד הצוואר וגדלים ככל שהם יורדים.','המעגל האחרון תלוי בקו ישר, כמו טיפה רגע לפני שהיא נופלת.']},
+  {id:'pendant',g:'him',name:'ishi',he:'אישי',jp:'石',mean:'אבן',cat:'necks',price:290,drop:false,
+   lead:'אבן שחורה גולמית בכיפת כסף מרוקעת, על שרשרת דקה.',
+   story:['אישי היא אבן, בלי ליטוש. האבן נשארת גולמית עם כל השברים והזוויות שלה, ומחזיקה אותה רק כיפה קטנה של כסף מרוקע.','זו השרשרת הכי ״אדמה״ בקולקציה. היא נראית טוב לבד, או בשכבות עם שרשרת עדינה נוספת.']},
+  {id:'bracelet',g:'him',name:'kusari',he:'קוסארי',jp:'鎖',mean:'שרשרת',cat:'wrists',price:420,drop:false,
+   lead:'חוליות גדולות ולא סימטריות, מרוקעות ומחוברות ביד לשרשרת אחת.',
+   story:['קוסארי זו שרשרת. כל חוליה בצמיד נוצרת בנפרד, מרוקעת ונסגרת ביד, ולכן אף חוליה לא זהה לאחרת.','יחד הן יוצרות צמיד כבד למראה עם תנועה רכה על פרק היד.']},
+];
+const CAT = {rings:['טבעת','טבעות'],ears:['עגילים','עגילים'],necks:['שרשרת','שרשראות'],wrists:['צמיד','צמידים']};
+const src = id => `assets/pieces/${id}.webp`;
+const ils = n => '₪' + n;
+const byName = n => P.find(p=>p.name===n);
+const RING_SIZES = [[48,15.3,'4.5'],[50,15.9,'5.25'],[52,16.6,'6'],[54,17.2,'6.75'],[56,17.8,'7.5'],[58,18.5,'8.5']];
+
+/* ---------- accessibility prefs ---------- */
+const root = document.documentElement;
+const A = {t:0, hc:false, ul:false, rf:false, still: matchMedia('(prefers-reduced-motion: reduce)').matches};
+try{ Object.assign(A, JSON.parse(localStorage.getItem('duni-a11y')||'{}')); }catch(e){}
+function applyA11y(){
+  root.style.fontSize = (100 + A.t*12.5) + '%';
+  ['hc','ul','rf','still'].forEach(k=>root.classList.toggle(k,!!A[k]));
+  document.querySelectorAll('.a11y-panel .tg').forEach(b=>b.setAttribute('aria-pressed',!!A[b.dataset.k]));
+  try{ localStorage.setItem('duni-a11y', JSON.stringify(A)); }catch(e){}
+}
+applyA11y();
+$('#a11yBtn').onclick = ()=>{ const p=$('#a11yPanel'); p.hidden=!p.hidden; $('#a11yBtn').setAttribute('aria-expanded',!p.hidden); if(!p.hidden) p.querySelector('button').focus(); };
+$('#tPlus').onclick = ()=>{ A.t=Math.min(3,A.t+1); applyA11y(); refreshMotion(); };
+$('#tMinus').onclick = ()=>{ A.t=Math.max(0,A.t-1); applyA11y(); refreshMotion(); };
+document.querySelectorAll('.a11y-panel .tg').forEach(b=>b.onclick=()=>{ A[b.dataset.k]=!A[b.dataset.k]; applyA11y(); if(b.dataset.k==='still'){ stopMotion(); if(currentView==='home') startMotion(); } });
+$('#a11yReset').onclick = ()=>{ Object.assign(A,{t:0,hc:false,ul:false,rf:false,still:matchMedia('(prefers-reduced-motion: reduce)').matches}); applyA11y(); stopMotion(); if(currentView==='home') startMotion(); };
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ if(!$('#a11yPanel').hidden){ $('#a11yPanel').hidden=true; $('#a11yBtn').setAttribute('aria-expanded','false'); $('#a11yBtn').focus(); } if(!$('#drawer').hidden) closeBag(); if(!$('#menu').hidden) closeMenu(); }});
+
+/* ---------- home content ---------- */
+const words = ['small things carry big energy','תכשיטים בעבודת יד','real materials','חומרים אמיתיים','slow process','手作りのジュエリー','timeless pieces','情熱'];
+const chunk = words.map(w=>`<span>${w}<img src="assets/star.png" alt=""></span>`).join('');
+$('#marq').innerHTML = chunk + chunk;
+
+const cardHTML = (p, cls='card') => `<a class="${cls}" href="#p-${p.name}" data-cat="${p.cat}" data-g="${p.g}">
+  <div class="stage">${p.drop && cls==='card' ?'<span class="new"><img src="assets/star.png" alt="">חדש</span>':''}<img src="${src(p.id)}" alt="${CAT[p.cat][0]} ${p.he}" loading="lazy"></div>
+  <div class="meta"><span><span class="nm" lang="en">${p.name}</span><span class="jp" lang="ja">${p.jp}</span><span class="heb">${CAT[p.cat][0]} ${p.he} · ${p.mean}</span></span><span class="pr">${ils(p.price)}</span></div>
+  </a>`;
+$('#rail').innerHTML = P.filter(p=>p.drop).map(p=>cardHTML(p,'drop-item')).join('');
+$('#grid').innerHTML = P.map(p=>cardHTML(p)).join('');
+const railStep = ()=> ($('#rail').firstElementChild?.offsetWidth||300) + 30;
+$('#railNext').onclick = ()=> $('#rail').scrollBy({left:-railStep(),behavior:A.still?'auto':'smooth'});
+$('#railPrev').onclick = ()=> $('#rail').scrollBy({left: railStep(),behavior:A.still?'auto':'smooth'});
+
+const filters = $('#filters');
+[['all','הכל',P.length],...Object.keys(CAT).map(c=>[c,CAT[c][1],P.filter(p=>p.cat===c).length]),['her','לנשים',P.filter(p=>p.g==='her').length],['him','לגברים',P.filter(p=>p.g==='him').length]].forEach(([c,label,n],i)=>{
+  const b=document.createElement('button'); b.type='button'; b.id='f-'+c; b.setAttribute('aria-pressed',i===0);
+  b.innerHTML=`${label}<sup>${n}</sup>`;
+  b.onclick=()=>{ filters.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    $('#grid').querySelectorAll('.card').forEach(card=>card.hidden=!(c==='all'||card.dataset.cat===c||card.dataset.g===c));
+    if(window.ScrollTrigger) ScrollTrigger.refresh(); };
+  filters.appendChild(b);
+});
+
+/* ---------- sizing, her/him, clock ---------- */
+$('#sizeTable tbody').innerHTML = RING_SIZES.map(([s,d,u])=>`<tr><td>${s}</td><td>${s}</td><td>${d}</td><td>${u}</td></tr>`).join('');
+document.querySelectorAll('.g-tile').forEach(t=>t.onclick=()=>{ $('#f-'+t.dataset.g).click(); const c=$('#collection'); window.scrollTo(0, c.getBoundingClientRect().top+scrollY); });
+const clockFmt = new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Jerusalem',hour:'2-digit',minute:'2-digit'});
+const tick = ()=>{ $('#clock').textContent = clockFmt.format(new Date()); };
+tick(); setInterval(tick, 20000);
+
+/* ---------- three-line menu ---------- */
+const menu = $('#menu'), burger = $('#burger');
+$('#mPieces').innerHTML = P.map(p=>`<li><a href="#p-${p.name}"><img src="${src(p.id)}" alt=""><span>${p.he} <span class="jp" lang="ja">${p.jp}</span></span></a></li>`).join('');
+function openMenu(){
+  menu.hidden = false; root.classList.add('menu-open'); root.style.overflow = 'hidden';
+  burger.setAttribute('aria-expanded','true'); burger.setAttribute('aria-label','סגירת התפריט');
+  void menu.offsetWidth; menu.classList.add('on');
+  menu.querySelector('a').focus({preventScroll:true});
+}
+function closeMenu(restoreFocus=true){
+  menu.classList.remove('on'); root.classList.remove('menu-open'); root.style.overflow = '';
+  burger.setAttribute('aria-expanded','false'); burger.setAttribute('aria-label','פתיחת התפריט');
+  const done = ()=>{ if(!menu.classList.contains('on')) menu.hidden = true; };
+  if(A.still) done(); else setTimeout(done, 700);
+  if(restoreFocus) burger.focus();
+}
+burger.onclick = ()=> burger.getAttribute('aria-expanded')==='true' ? closeMenu() : openMenu();
+menu.addEventListener('click', e=>{ const a=e.target.closest('a'); if(!a) return; const same = a.getAttribute('href')===location.hash; closeMenu(false); if(same) route(); });
+
+/* ---------- bag ---------- */
+let bag = [];
+function renderBag(){
+  $('#bagN').textContent = bag.length;
+  $('#bagList').innerHTML = bag.length ? bag.map((it,i)=>{const p=P.find(x=>x.id===it.id);return `<li><img src="${src(p.id)}" alt=""><div><div>${CAT[p.cat][0]} ${p.he} <span lang="en" style="font-family:var(--f-ui)">(${p.name})</span></div><div style="font-size:.8rem;color:var(--ink-2)">מידה: ${it.size}</div><button class="rm" type="button" data-i="${i}">הסרה</button></div><span style="font-family:var(--f-ui)">${ils(p.price)}</span></li>`}).join('') : '<li style="display:block;border:0;color:var(--ink-2)">הסל עדיין ריק.</li>';
+  $('#bagTot').textContent = ils(bag.reduce((s,it)=>s+P.find(x=>x.id===it.id).price,0));
+  $('#bagList').querySelectorAll('.rm').forEach(b=>b.onclick=()=>{bag.splice(+b.dataset.i,1);renderBag();});
+}
+let lastFocus=null;
+function openBag(){ lastFocus=document.activeElement; renderBag(); $('#drawer').hidden=false; $('#drawerX').focus(); }
+function closeBag(){ $('#drawer').hidden=true; lastFocus&&lastFocus.focus(); }
+$('#bagBtn').onclick=openBag; $('#drawerX').onclick=closeBag; $('#drawerScrim').onclick=closeBag;
+$('#checkout').onclick=()=>say(bag.length?'התשלום יחובר בקרוב':'הסל ריק');
+$('#customBtn').onclick=e=>{e.preventDefault();say('קישור ליצירת קשר יתווסף בקרוב');};
+const toast=$('#toast'); let tt;
+function say(t){toast.textContent=t;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('on'),2400);}
+
+/* ---------- product page ---------- */
+function productHTML(p){
+  const i=P.indexOf(p), prev=P[(i-1+P.length)%P.length], next=P[(i+1)%P.length];
+  const isRing=p.cat==='rings';
+  const sizes = isRing ? (p.id==='openring'?['מתכווננת']:RING_SIZES.map(s=>String(s[0]))) : ['מידה אחת'];
+  const related = P.filter(x=>x!==p && (x.cat===p.cat || x.drop===p.drop)).slice(0,4);
+  return `<article class="pdp">
+    <nav class="crumbs" aria-label="מיקום בעמוד"><a href="#home">בית</a><span aria-hidden="true">/</span><a href="#collection">הקולקציה</a><span aria-hidden="true">/</span><span aria-current="page">${CAT[p.cat][0]} ${p.he}</span></nav>
+    <div class="pdp-top">
+      <div class="pdp-stage" id="pdpStage">${p.drop?'<span class="tag"><img src="assets/star.png" alt="">מהדרופ החדש</span>':''}<img src="${src(p.id)}" alt="${CAT[p.cat][0]} ${p.he}: ${p.lead}"><span class="jp jp-big" lang="ja" aria-hidden="true">${p.jp}</span><div class="spec" aria-hidden="true"><div class="h"><span>spec</span><span>${p.name}</span></div><dl><dt>שם</dt><dd>${p.jp} · ${p.mean}</dd><dt>חומר</dt><dd>כסף 925</dd><dt>טכניקה</dt><dd>ריקוע ביד</dd><dt>סוג</dt><dd>${CAT[p.cat][0]}</dd></dl></div></div>
+      <div class="pdp-info">
+        <div class="eyebrow">${CAT[p.cat][0]} · ${p.g==='her'?'לנשים':'לגברים'} · כסף 925 · עבודת יד</div>
+        <h1 lang="en">${p.name}<span class="jp" lang="ja">${p.jp}</span></h1>
+        <div class="heb-name">${CAT[p.cat][0]} ${p.he} · ״${p.mean}״</div>
+        <p class="jp-note">${p.jp} (<span lang="en">${p.name}</span>, נקרא ${p.he}) ביפנית: ${p.mean}.</p>
+        <div class="pr">${ils(p.price)}</div>
+        <p class="lead">${p.lead}</p>
+        <div><div class="sizes-l"><span id="sizeL">מידה</span>${isRing&&p.id!=='openring'?'<a href="#sizing">איך מודדים אצבע?</a>':''}</div>
+          <div class="sizes" id="sizes" role="group" aria-labelledby="sizeL" style="margin-top:8px">${sizes.map(s=>`<button type="button" aria-pressed="${sizes.length===1}">${s}</button>`).join('')}</div></div>
+        <button class="btn" type="button" id="addBag">הוספה לסל <img src="assets/star.png" alt=""></button>
+        <div class="assure"><div><b>עבודת יד</b>כל תכשיט מיוצר בנפרד</div><div><b>כסף 925</b>כסף סטרלינג</div><div><b>אריזת מתנה</b>עם סימן ה-✦</div></div>
+        <div>
+          <details open><summary>פרטים וחומרים</summary><div class="body"><ul><li>כסף סטרלינג 925</li><li>מכופף, מרוקע בפטיש ומלוטש ביד</li><li>כל תכשיט שונה מעט מהתמונה, וזה חלק מהעבודה בעבודת יד</li>${p.id==='signet'||p.id==='pendant'?'<li>האבן משתנה מעט בצורה ובגוון בין תכשיט לתכשיט</li>':''}</ul></div></details>
+          ${isRing&&p.id!=='openring'?`<details><summary>מדריך מידות</summary><div class="body">מודדים את ההיקף של האצבע במילימטרים, והמספר הוא המידה. אם יש ספק, עדיף לבחור מידה אחת למעלה.<div class="tblwrap"><table class="size-table"><thead><tr><th scope="col">מידה</th><th scope="col">היקף (מ״מ)</th><th scope="col">קוטר (מ״מ)</th><th scope="col">US בערך</th></tr></thead><tbody>${RING_SIZES.map(([s,d,u])=>`<tr><td>${s}</td><td>${s}</td><td>${d}</td><td>${u}</td></tr>`).join('')}</tbody></table></div></div></details>`:''}
+          <details><summary>שמירה וניקוי</summary><div class="body">כסף משנה גוון עם הזמן במגע עם אוויר ולחות. מורידים לפני מקלחת, ים, בריכה ושימוש בחומרי ניקוי, שומרים במקום יבש ומבריקים מדי פעם עם מטלית לניקוי כסף. <a href="#care">למדריך המלא</a></div></details>
+          <details><summary>משלוח והחזרות</summary><div class="body">כל תכשיט מוכן בהזמנה. זמן הכנה ומשלוח: <span class="ph">ימי עסקים</span>. אפשר לבטל עסקה לפי חוק הגנת הצרכן. <a href="#shipping">משלוחים והחזרות</a> · <a href="#cancel">מדיניות ביטולים</a></div></details>
+        </div>
+      </div>
+    </div>
+    <section class="pdp-story" aria-labelledby="pstH">
+      <h2 id="pstH"><small lang="en">the story of ${p.name}</small>הסיפור של ${p.he}</h2>
+      <div>${p.story.map(t=>`<p>${t}</p>`).join('')}<div class="by"><img src="assets/star.png" alt="">עוצב ונעשה ביד ב-Duni</div></div>
+    </section>
+    <section class="related" aria-labelledby="relH">
+      <h2 id="relH">עוד מהקולקציה<small lang="en">more pieces</small></h2>
+      <div class="grid">${related.map(x=>cardHTML(x)).join('')}</div>
+    </section>
+    <nav class="pager" aria-label="תכשיט קודם והבא"><a href="#p-${prev.name}">→ ${CAT[prev.cat][0]} ${prev.he}</a><a href="#p-${next.name}">${CAT[next.cat][0]} ${next.he} ←</a></nav>
+  </article>`;
+}
+function mountProduct(p){
+  const v=$('#v-product'); v.innerHTML=productHTML(p);
+  let size = v.querySelectorAll('#sizes button').length===1 ? v.querySelector('#sizes button').textContent : null;
+  v.querySelectorAll('#sizes button').forEach(b=>b.onclick=()=>{size=b.textContent;v.querySelectorAll('#sizes button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+  v.querySelector('#addBag').onclick=()=>{ if(!size){say('צריך לבחור מידה');v.querySelector('#sizes button').focus();return;} bag.push({id:p.id,size}); renderBag(); say(`${CAT[p.cat][0]} ${p.he} נוספה לסל`); };
+  const st=v.querySelector('#pdpStage'), im=st.querySelector('img');
+  st.addEventListener('pointermove',e=>{ if(A.still) return; const r=st.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5; im.style.transform=`rotateY(${x*18}deg) rotateX(${-y*14}deg) rotate(${x*6}deg) scale(1.04)`; });
+  st.addEventListener('pointerleave',()=>im.style.transform='');
+  document.title = `${p.name} · Duni`;
+}
+
+/* ---------- policy pages ---------- */
+const PH = t => `<span class="ph">${t}</span>`;
+const UPDATED = 'עודכן לאחרונה: 29.10.2026';
+const DOCS = {
+  shipping:{t:'משלוחים והחזרות',en:'shipping & returns',b:`
+    <h2>זמן הכנה</h2><p>כל תכשיט של Duni נעשה ביד ומוכן אחרי ההזמנה. זמן ההכנה הוא ${PH('מספר ימי עסקים')} ימי עסקים, ותכשיט בהזמנה אישית ${PH('מספר ימים')} ימי עסקים.</p>
+    <h2>משלוח</h2><ul><li>משלוח עד הבית: ${PH('מחיר / חינם מעל סכום')} · ${PH('ימי אספקה')}</li><li>איסוף עצמי: ${PH('כתובת ושעות, אם קיים')}</li></ul><p>מספר מעקב נשלח במייל או בוואטסאפ ברגע שהחבילה יוצאת.</p>
+    <h2>החזרות והחלפות</h2><p>אפשר להחזיר או להחליף תכשיט שלא נענד, באריזתו המקורית, בתוך 14 יום מיום קבלתו, לפי <a href="#cancel">מדיניות הביטולים</a>. תכשיטים שיוצרו בהזמנה אישית לא ניתנים להחזרה, חוץ ממקרה של פגם.</p>
+    <h2>פגם או נזק במשלוח</h2><p>אם התכשיט הגיע פגום, כותבים לנו בתוך 7 ימים עם תמונה ל-${PH('כתובת מייל')} ונתקן, נחליף או נחזיר את הכסף.</p>`},
+  cancel:{t:'מדיניות ביטולים',en:'cancellation policy',b:`
+    <p>מדיניות זו נכתבה לפי חוק הגנת הצרכן, התשמ״א-1981, ותקנות הגנת הצרכן (ביטול עסקה), התשע״א-2010.</p>
+    <h2>ביטול עסקה</h2><ul><li>אפשר לבטל עסקה בתוך 14 יום מיום קבלת התכשיט או מיום קבלת מסמך פרטי העסקה, המאוחר מביניהם.</li><li>מודיעים על הביטול בכתב: במייל ל-${PH('כתובת מייל')} או בוואטסאפ ל-${PH('מספר טלפון')}, עם שם מלא ומספר הזמנה.</li><li>מחזירים את התכשיט כשהוא לא נענד, באריזתו המקורית. עלות המשלוח חזרה על הלקוח, חוץ ממקרה של פגם.</li><li>אם הביטול לא נובע מפגם, ייגבו דמי ביטול של 5% ממחיר העסקה או 100 ₪, הנמוך מביניהם.</li><li>הכסף מוחזר באותו אמצעי תשלום בתוך 14 יום מיום קבלת הודעת הביטול.</li></ul>
+    <h2>אנשים עם מוגבלות, אזרחים ותיקים ועולים חדשים</h2><p>אדם עם מוגבלות, אזרח ותיק (מגיל 65) ועולה חדש (עד חמש שנים מיום העלייה) רשאים לבטל עסקה בתוך 4 חודשים, אם העסקה כללה שיחה עם העסק, כולל שיחה בתקשורת אלקטרונית. יש להציג תעודה מתאימה.</p>
+    <h2>תכשיטים בהזמנה אישית</h2><p>לפי החוק, טובין שיוצרו במיוחד בעבור הצרכן לא ניתנים לביטול. תכשיט בהזמנה אישית (מידה, אבן או עיצוב לפי בקשה) לא ניתן לביטול אחרי שהעבודה עליו התחילה, חוץ ממקרה של פגם.</p>`},
+  privacy:{t:'מדיניות פרטיות',en:'privacy policy',b:`
+    <p>Duni מכבדת את הפרטיות שלך. המדיניות הזו מסבירה איזה מידע נאסף באתר ומה עושים איתו, לפי חוק הגנת הפרטיות, התשמ״א-1981.</p>
+    <h2>איזה מידע נאסף</h2><ul><li>פרטים שמסרת בהזמנה: שם, טלפון, מייל וכתובת למשלוח.</li><li>פרטי תשלום מעובדים אצל חברת הסליקה ${PH('שם חברת הסליקה')} ולא נשמרים אצלנו.</li><li>העדפות נגישות שבחרת (כמו גודל טקסט) נשמרות רק בדפדפן שלך.</li></ul>
+    <h2>למה משתמשים בו</h2><p>כדי לטפל בהזמנה, לשלוח אותה, ליצור קשר לגבי ההזמנה ולתת שירות. אם הסכמת לכך, נשלח גם עדכונים על דרופים חדשים, ואפשר להסיר את עצמך בכל רגע.</p>
+    <h2>שיתוף מידע</h2><p>המידע לא נמכר. הוא מועבר רק למי שצריך אותו כדי להשלים את ההזמנה: חברת השליחויות וחברת הסליקה.</p>
+    <h2>עוגיות (cookies)</h2><p>${PH('לעדכן לפי כלי מדידה ושיווק שיחוברו לאתר, כמו פיקסל או Google Analytics')}</p>
+    <h2>הזכויות שלך</h2><p>אפשר לבקש לעיין במידע שלך, לתקן אותו או למחוק אותו בפנייה ל-${PH('כתובת מייל')}.</p>`},
+  terms:{t:'תקנון האתר',en:'terms of use',b:`
+    <h2>כללי</h2><p>האתר מופעל על ידי ${PH('שם העסק')}, ${PH('עוסק מורשה / ח.פ.')}, ${PH('כתובת העסק')}. השימוש באתר ורכישה בו כפופים לתקנון הזה.</p>
+    <h2>המוצרים</h2><p>כל התכשיטים נעשים ביד, ולכן כל תכשיט שונה מעט מהתמונה בצורה, בטקסטורה ובגוון האבן. ההבדלים האלה הם חלק מהתכשיט ולא פגם.</p>
+    <h2>מחירים ותשלום</h2><p>המחירים באתר בשקלים וכוללים מע״מ ${PH('לאשר')}. דמי משלוח מוצגים לפני התשלום.</p>
+    <h2>זכויות יוצרים</h2><p>העיצובים, התמונות, הלוגו והטקסטים באתר שייכים ל-Duni. אסור להעתיק או לשכפל אותם בלי אישור בכתב.</p>
+    <h2>משלוחים, ביטולים ופרטיות</h2><p>ראו <a href="#shipping">משלוחים והחזרות</a>, <a href="#cancel">מדיניות ביטולים</a> ו<a href="#privacy">מדיניות פרטיות</a>.</p>
+    <h2>יצירת קשר</h2><p>${PH('טלפון')} · ${PH('מייל')}</p>`},
+  accessibility:{t:'הצהרת נגישות',en:'accessibility statement',b:`
+    <p>ב-Duni רוצים שכל אחד ואחת יוכלו לגלוש באתר ולקנות בו בנוחות. אנחנו פועלים להנגיש את האתר לפי תקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), התשע״ג-2013, ולפי התקן הישראלי ת״י 5568 המבוסס על הנחיות WCAG 2.0 ברמה AA.</p>
+    <h2>מה עשינו באתר</h2><ul><li>תפריט נגישות (הכפתור בפינה השמאלית התחתונה): הגדלת טקסט, ניגודיות גבוהה, הדגשת קישורים, גופן קריא ועצירת אנימציות.</li><li>ניווט מלא במקלדת, עם סימון ברור של הרכיב שבפוקוס וקישור ״דילוג לתוכן הראשי״.</li><li>טקסט חלופי לתמונות התכשיטים.</li><li>מבנה כותרות מסודר ושפת עמוד מוגדרת (עברית, עם קטעים באנגלית וביפנית).</li><li>התאמה לטלפון ולמחשב.</li><li>כשהמכשיר מוגדר להפחתת תנועה, האנימציות נעצרות אוטומטית.</li></ul>
+    <h2>מגבלות ידועות</h2><p>${PH('לעדכן אחרי בדיקת נגישות מקצועית')}</p>
+    <h2>נתקלת בבעיה?</h2><p>אם משהו באתר לא נגיש לך, נשמח לשמוע ולתקן. רכז/ת הנגישות: ${PH('שם')} · טלפון ${PH('מספר')} · מייל ${PH('כתובת מייל')}.</p>`},
+  care:{t:'שמירה וניקוי של כסף',en:'silver care',b:`
+    <p>כסף סטרלינג 925 משנה גוון עם הזמן. זה טבעי וקל להחזיר לו את הברק.</p>
+    <h2>ביום-יום</h2><ul><li>מורידים את התכשיט לפני מקלחת, ים, בריכה, ספורט ושימוש בחומרי ניקוי.</li><li>מרססים בושם וקרם לפני שעונדים, לא אחרי.</li><li>שומרים כל תכשיט בנפרד, במקום יבש ובשקית סגורה.</li></ul>
+    <h2>ניקוי</h2><ul><li>מבריקים בעדינות עם מטלית לניקוי כסף.</li><li>לא משתמשים במברשת קשה או בחומרים שוחקים על תכשיטים עם אבן.</li><li>סימני הפטיש הם חלק מהעיצוב. אין צורך ״להחליק״ אותם.</li></ul>`},
+  sizes:{t:'מדריך מידות טבעות',en:'ring size guide',b:`
+    <p>המידה של טבעת היא ההיקף של האצבע במילימטרים.</p>
+    <h2>איך מודדים</h2><ul><li>כורכים פס נייר דק סביב בסיס האצבע.</li><li>מסמנים איפה הוא נפגש, ומודדים בסרגל את האורך במילימטרים.</li><li>מודדים בסוף היום, כשהאצבעות מעט נפוחות. אם יש ספק, עדיף מידה אחת למעלה.</li></ul>
+    <div class="tblwrap"><table class="size-table"><thead><tr><th scope="col">מידה</th><th scope="col">היקף (מ״מ)</th><th scope="col">קוטר פנימי (מ״מ)</th></tr></thead><tbody>${RING_SIZES.map(([s,d])=>`<tr><td>${s}</td><td>${s}</td><td>${d}</td></tr>`).join('')}</tbody></table></div>
+    <p>טבעת מוסובי מתכווננת ומתאימה לרוב המידות.</p>`},
+};
+function mountDoc(k){
+  const d=DOCS[k];
+  $('#v-doc').innerHTML=`<article class="doc"><div><h1>${d.t}</h1><div class="en" lang="en">${d.en}</div><div class="upd">${UPDATED}</div>${d.b}<a class="btn ghost back" href="#home">חזרה לאתר <img src="assets/star.png" alt=""></a></div></article>`;
+  document.title = `${d.t} · Duni`;
+}
+
+/* ---------- motion (home only) ---------- */
+const ORB = P.filter(p=>!['signet','band'].includes(p.id));
+// [x, y] as fractions of the half-viewport; the bottom-centre band stays empty for the caption
+const SPOTS_D = [[-.78,-.56],[-.30,-.66],[.30,-.66],[.78,-.56],[-.94,.02],[.94,.02],[-.62,.44],[.62,.44]];
+const SPOTS_M = [[-.74,-.62],[.74,-.62],[-.78,-.22],[.78,-.22],[-.78,.18],[.78,.18],[-.6,.5],[.6,.5]];
+const ROT = [-14,8,-6,12,6,-10,10,-8];
+const orbs = ORB.map(p=>{ const d=document.createElement('div'); d.className='piece orbit'; d.innerHTML=`<img src="${src(p.id)}" alt="">`; $('#orbits').appendChild(d); return d; });
+let ctx=null;
+function startMotion(){
+  if(!window.gsap || A.still){ $('#burstCopy').style.opacity=0; orbs.forEach(o=>o.style.opacity=0); return; }
+  gsap.registerPlugin(ScrollTrigger);
+  const ring=$('#heroRing');
+  root.classList.add('gs');
+  ctx = gsap.context(()=>{
+    gsap.set([ring,...orbs],{xPercent:-50,yPercent:-50});
+    gsap.from('#logoWrap img',{opacity:0,y:24,duration:1.4,ease:'power3.out'});
+    gsap.from(ring,{opacity:0,scale:.7,rotation:-50,duration:2,ease:'expo.out',delay:.15});
+    gsap.to(ring.firstElementChild,{y:-12,rotation:3,duration:3.2,repeat:-1,yoyo:true,ease:'sine.inOut'});
+
+    const tall = ()=> innerWidth/innerHeight < 1.15;
+    const spot = i => (tall()?SPOTS_M:SPOTS_D)[i];
+    const sizeOrbs = ()=>{ const W=innerWidth,H=innerHeight; const w = tall()? Math.min(.21*W,.15*H,160) : Math.min(.125*W,.21*H,160); orbs.forEach(o=>o.style.width=w+'px'); };
+    sizeOrbs(); ScrollTrigger.addEventListener('refreshInit', sizeOrbs);
+    const tl=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:'#hero',start:'top top',end:'+=110%',pin:true,scrub:.4,invalidateOnRefresh:true}});
+    tl.fromTo('#logoWrap',{opacity:1,scale:1},{opacity:0,scale:.9,duration:.35,immediateRender:false},0)
+      .fromTo('.corner,#heroTag,#hud',{opacity:1},{opacity:0,duration:.2,immediateRender:false},0)
+      .fromTo(ring,{y:0,rotation:0,scale:1},{y:()=>-innerHeight*(innerWidth<760?.13:.11),rotation:18,scale:innerWidth<760?.7:.68,duration:.7,ease:'power1.inOut',immediateRender:false},0);
+    orbs.forEach((o,i)=>{
+      tl.fromTo(o,{x:0,y:0,scale:.3,opacity:0,rotation:ROT[i]*3},
+        {x:()=>spot(i)[0]*innerWidth*.44,
+         y:()=>spot(i)[1]*innerHeight*.42,
+         scale:1,opacity:1,rotation:ROT[i],duration:.55,ease:'power2.out'},.12+i*.03);
+    });
+    tl.fromTo('#burstCopy',{opacity:0},{opacity:1,duration:.25,immediateRender:false},.55).to({}, {duration:.25});
+
+    gsap.utils.toArray('#grid .card').forEach(c=>gsap.from(c,{y:36,duration:.9,ease:'power3.out',scrollTrigger:{trigger:c,start:'top 94%',once:true}}));
+    gsap.to('.custom .ring-stage img',{rotation:18,ease:'none',scrollTrigger:{trigger:'.custom',start:'top bottom',end:'bottom top',scrub:true}});
+  });
+}
+function stopMotion(){ if(ctx){ ctx.revert(); ctx=null; } root.classList.remove('gs'); }
+function refreshMotion(){ if(window.ScrollTrigger) ScrollTrigger.refresh(); }
+
+/* ---------- router ---------- */
+const HOME_SECTIONS = ['home','drop','collection','for','vision','sizing','custom'];
+let currentView=null;
+function show(view){
+  ['home','product','doc'].forEach(v=>$('#v-'+v).hidden = v!==view);
+  if(view!==currentView){ if(currentView==='home') stopMotion(); currentView=view; if(view==='home') startMotion(); }
+}
+function route(){
+  if(!menu.hidden && menu.classList.contains('on')) closeMenu(false);
+  const h = decodeURIComponent(location.hash.slice(1));
+  if(h.startsWith('p-') && byName(h.slice(2))){ show('product'); mountProduct(byName(h.slice(2))); window.scrollTo(0,0); $('#main').focus({preventScroll:true}); return; }
+  if(DOCS[h]){ show('doc'); mountDoc(h); window.scrollTo(0,0); $('#main').focus({preventScroll:true}); return; }
+  document.title='Duni Jewelry';
+  const wasHome = currentView==='home';
+  show('home');
+  const target = HOME_SECTIONS.includes(h) && h!=='home' ? document.getElementById(h) : null;
+  const go = ()=>{ if(target){ const y=target.getBoundingClientRect().top+scrollY; window.scrollTo({top:y,behavior:'auto'}); } else if(!wasHome || h==='home'){ window.scrollTo({top:0,behavior:'auto'}); } };
+  if(wasHome) go(); else requestAnimationFrame(()=>{ refreshMotion(); requestAnimationFrame(go); });
+}
+$('#skipLink').onclick = e=>{ e.preventDefault(); $('#main').focus(); };
+addEventListener('hashchange', route);
+route();
+renderBag();
+addEventListener('load',refreshMotion);
+</script>
+
+</body>
+</html>
